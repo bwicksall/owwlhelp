@@ -20,8 +20,10 @@ function is_checked(string $key, string $value): bool {
 
 $email = post_value('email');
 $library = post_value('library');
+$requester_notes = post_value('requester_notes');
 $user_name = post_value('user_name');
 $start_date = post_value('start_date');
+$email_groups = isset($_POST['email_groups']) && is_array($_POST['email_groups']) ? $_POST['email_groups'] : [];
 $evergreen_required = post_value('evergreen_required');
 $evergreen_type = post_value('evergreen_type');
 $cataloging_addon = post_value('cataloging_addon');
@@ -74,9 +76,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             "Library: {$library}",
         ];
 
+        if ($requester_notes !== '') {
+            $requester_lines[] = "Requester Notes: {$requester_notes}";
+        }
+
+        $email_groups_display = $email_groups ? implode(', ', $email_groups) : 'None';
+
         $email_account_lines = [
             "User Name: {$user_name}",
             "Start Date: {$start_date}",
+            "Email Groups/Listservs: {$email_groups_display}",
         ];
 
         $ad_lines = [
@@ -106,7 +115,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($primary_sent && $evergreen_sent) {
             $success_message = 'Your request has been sent.';
             $_POST = [];
-            $email = $library = $user_name = $start_date = $evergreen_required = $evergreen_type = $cataloging_addon = $ad_required = '';
+            $email = $library = $requester_notes = $user_name = $start_date = $evergreen_required = $evergreen_type = $cataloging_addon = $ad_required = '';
+            $email_groups = [];
         } else {
             $errors[] = 'Your request could not be sent. Please try again or contact support.';
         }
@@ -181,6 +191,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $ad_required === '') {
                 <?php endforeach; ?>
               </select>
             </div>
+            <div class="col-12">
+              <label for="requester_notes" class="form-label">Notes (optional)</label>
+              <textarea class="form-control" id="requester_notes" name="requester_notes" rows="3"><?= htmlspecialchars($requester_notes, ENT_QUOTES, 'UTF-8') ?></textarea>
+            </div>
           </div>
         </div>
 
@@ -194,6 +208,19 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $ad_required === '') {
             <div class="col-md-6">
               <label for="start_date" class="form-label">Start Date</label>
               <input type="date" class="form-control" id="start_date" name="start_date" value="<?= htmlspecialchars($start_date, ENT_QUOTES, 'UTF-8') ?>" required>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Email Groups/Listservs (optional)</label>
+              <div class="d-flex flex-wrap gap-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="email_groups[]" id="group_ysl" value="YSL-L" <?= in_array('YSL-L', $email_groups, true) ? 'checked' : '' ?>>
+                  <label class="form-check-label" for="group_ysl">YSL-L</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="email_groups[]" id="group_holdings" value="Holdings" <?= in_array('Holdings', $email_groups, true) ? 'checked' : '' ?>>
+                  <label class="form-check-label" for="group_holdings">Holdings</label>
+                </div>
+              </div>
             </div>
           </div>
         </div>
