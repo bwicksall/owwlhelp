@@ -2,6 +2,8 @@
 require __DIR__ . '/config.php';
 
 $destination_email = $config['destination_email'] ?? 'bwicksall@owwl.org';
+$primary_email = $config['primary_email'] ?? $destination_email;
+$evergreen_email = $config['evergreen_email'] ?? 'webmaster@owwl.org';
 $libraries = $config['libraries'] ?? ['Test Library 1', 'Test Library 2'];
 $evergreen_account_types = $config['evergreen_account_types'] ?? ['Basic (No Circ)', 'Circ I', 'Circ II'];
 
@@ -66,28 +68,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$errors) {
         $subject = 'OWWL Help - New User Account Request';
 
-        $lines = [
+        $requester_lines = [
             "Ticket Type: New User Account",
             "Requester Email: {$email}",
             "Library: {$library}",
+        ];
+
+        $email_account_lines = [
             "User Name: {$user_name}",
             "Start Date: {$start_date}",
+        ];
+
+        $ad_lines = [
+            "Active Directory Account Needed: {$ad_required}",
+        ];
+
+        $evergreen_lines = [
             "Evergreen Account Required: {$evergreen_required}",
         ];
 
         if ($evergreen_required === 'Yes') {
-            $lines[] = "Evergreen Account Type: {$evergreen_type}";
-            $lines[] = "Item Cataloging Add-on Needed: {$cataloging_addon}";
+            $evergreen_lines[] = "Evergreen Account Type: {$evergreen_type}";
+            $evergreen_lines[] = "Item Cataloging Add-on Needed: {$cataloging_addon}";
         }
 
-        $lines[] = "Active Directory Account Needed: {$ad_required}";
-
-        $message = implode("\n", $lines);
+        $primary_message = implode("\n", array_merge($requester_lines, $email_account_lines, $ad_lines));
+        $evergreen_message = implode("\n", array_merge($requester_lines, $email_account_lines, $evergreen_lines));
         $headers = "From: {$email}\r\nReply-To: {$email}\r\n";
 
-        $mail_sent = @mail($destination_email, $subject, $message, $headers);
+        $primary_sent = @mail($primary_email, $subject, $primary_message, $headers);
+        $evergreen_sent = true;
 
-        if ($mail_sent) {
+        if ($evergreen_required === 'Yes') {
+            $evergreen_sent = @mail($evergreen_email, $subject, $evergreen_message, $headers);
+        }
+
+        if ($primary_sent && $evergreen_sent) {
             $success_message = 'Your request has been sent.';
             $_POST = [];
             $email = $library = $user_name = $start_date = $evergreen_required = $evergreen_type = $cataloging_addon = $ad_required = '';
