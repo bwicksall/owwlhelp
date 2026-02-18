@@ -1,4 +1,8 @@
 <?php
+require __DIR__ . '/config.php';
+
+$destination_email = $config['destination_email'] ?? 'bwicksall@owwl.org';
+
 $errors = [];
 $success_message = '';
 
@@ -75,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message = implode("\n", $lines);
         $headers = "From: {$email}\r\nReply-To: {$email}\r\n";
 
-        $mail_sent = @mail('bwicksall@owwl.org', $subject, $message, $headers);
+        $mail_sent = @mail($destination_email, $subject, $message, $headers);
 
         if ($mail_sent) {
             $success_message = 'Your request has been sent.';
@@ -86,8 +90,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $evergreen_required === '') {
+    $evergreen_required = 'No';
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $cataloging_addon === '') {
     $cataloging_addon = 'No';
+}
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $ad_required === '') {
+    $ad_required = 'No';
 }
 ?>
 <!doctype html>
@@ -97,53 +109,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $cataloging_addon === '') {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>OWWL Help - New User Account</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-      :root {
-        --owwl-ink: #1e2a32;
-        --owwl-sea: #0f627b;
-        --owwl-mist: #e7f2f6;
-      }
-      body {
-        background: linear-gradient(120deg, #f7fbfd 0%, var(--owwl-mist) 100%);
-        color: var(--owwl-ink);
-        font-family: "Source Serif 4", "Georgia", serif;
-      }
-      .page-shell {
-        max-width: 900px;
-        margin: 3rem auto;
-        padding: 2.5rem 2.75rem;
-        background: white;
-        border-radius: 18px;
-        box-shadow: 0 20px 45px rgba(17, 35, 45, 0.12);
-      }
-      h1, h2, h3, label {
-        font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
-      }
-      .section-card {
-        padding: 1.5rem;
-        border-radius: 14px;
-        background: #f9fcfd;
-        border: 1px solid rgba(15, 98, 123, 0.12);
-      }
-      .section-title {
-        color: var(--owwl-sea);
-        font-size: 1.1rem;
-        letter-spacing: 0.02em;
-        text-transform: uppercase;
-      }
-      .btn-primary {
-        background-color: var(--owwl-sea);
-        border-color: var(--owwl-sea);
-      }
-      .btn-primary:hover {
-        background-color: #0b5166;
-        border-color: #0b5166;
-      }
-      .form-text {
-        color: #51616b;
-      }
-    </style>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600&family=Source+Serif+4:wght@400;600&display=swap">
+    <link rel="stylesheet" href="assets/css/styles.css">
   </head>
   <body>
     <main class="page-shell">
@@ -213,11 +180,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $cataloging_addon === '') {
               <label class="form-label">Evergreen Required?</label>
               <div class="d-flex gap-3">
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="evergreen_required" id="evergreen_yes" value="Yes" <?= is_checked('evergreen_required', 'Yes') ? 'checked' : '' ?> required>
+                  <input class="form-check-input" type="radio" name="evergreen_required" id="evergreen_yes" value="Yes" <?= $evergreen_required === 'Yes' ? 'checked' : '' ?> required>
                   <label class="form-check-label" for="evergreen_yes">Yes</label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="evergreen_required" id="evergreen_no" value="No" <?= is_checked('evergreen_required', 'No') ? 'checked' : '' ?>>
+                  <input class="form-check-input" type="radio" name="evergreen_required" id="evergreen_no" value="No" <?= $evergreen_required === 'No' ? 'checked' : '' ?>>
                   <label class="form-check-label" for="evergreen_no">No</label>
                 </div>
               </div>
@@ -252,11 +219,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $cataloging_addon === '') {
           <p class="form-text mb-3">Active Directory is required if the user needs to login to a library staff computer with a personal account.</p>
           <div class="d-flex gap-3">
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="ad_required" id="ad_yes" value="Yes" <?= is_checked('ad_required', 'Yes') ? 'checked' : '' ?> required>
+              <input class="form-check-input" type="radio" name="ad_required" id="ad_yes" value="Yes" <?= $ad_required === 'Yes' ? 'checked' : '' ?> required>
               <label class="form-check-label" for="ad_yes">Yes</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="ad_required" id="ad_no" value="No" <?= is_checked('ad_required', 'No') ? 'checked' : '' ?>>
+              <input class="form-check-input" type="radio" name="ad_required" id="ad_no" value="No" <?= $ad_required === 'No' ? 'checked' : '' ?>>
               <label class="form-check-label" for="ad_no">No</label>
             </div>
           </div>
@@ -269,21 +236,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $cataloging_addon === '') {
       </form>
     </main>
 
-    <script>
-      const evergreenYes = document.getElementById('evergreen_yes');
-      const evergreenNo = document.getElementById('evergreen_no');
-      const evergreenFields = document.querySelectorAll('.evergreen-fields');
-
-      function toggleEvergreenFields() {
-        const show = evergreenYes.checked;
-        evergreenFields.forEach((field) => {
-          field.style.display = show ? 'block' : 'none';
-        });
-      }
-
-      evergreenYes.addEventListener('change', toggleEvergreenFields);
-      evergreenNo.addEventListener('change', toggleEvergreenFields);
-      toggleEvergreenFields();
-    </script>
+    <script src="assets/js/form.js"></script>
   </body>
 </html>
