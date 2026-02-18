@@ -2,5 +2,13 @@
 
 $config = [
     'destination_email' => 'bwicksall@owwl.org',
+    'libraries' => [
+        'Test Library 1',
+        'Test Library 2',
+    ],
+    'evergreen_account_types' => [
+        'Basic (No Circ)',
+        'Circ I',
+        'Circ II',
+    ],
 ];
-

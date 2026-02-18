@@ -2,6 +2,8 @@
 require __DIR__ . '/config.php';
 
 $destination_email = $config['destination_email'] ?? 'bwicksall@owwl.org';
+$libraries = $config['libraries'] ?? ['Test Library 1', 'Test Library 2'];
+$evergreen_account_types = $config['evergreen_account_types'] ?? ['Basic (No Circ)', 'Circ I', 'Circ II'];
 
 $errors = [];
 $success_message = '';
@@ -30,6 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($library === '') {
         $errors[] = 'Please select a library.';
+    } elseif (!in_array($library, $libraries, true)) {
+        $errors[] = 'Please select a valid library.';
     }
 
     if ($user_name === '') {
@@ -47,6 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($evergreen_required === 'Yes') {
         if ($evergreen_type === '') {
             $errors[] = 'Please select an Evergreen account type.';
+        } elseif (!in_array($evergreen_type, $evergreen_account_types, true)) {
+            $errors[] = 'Please select a valid Evergreen account type.';
         }
         if ($cataloging_addon !== 'Yes' && $cataloging_addon !== 'No') {
             $cataloging_addon = 'No';
@@ -152,8 +158,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $ad_required === '') {
               <label for="library" class="form-label">Library</label>
               <select class="form-select" id="library" name="library" required>
                 <option value="" <?= $library === '' ? 'selected' : '' ?>>Select a library</option>
-                <option value="Test Library 1" <?= $library === 'Test Library 1' ? 'selected' : '' ?>>Test Library 1</option>
-                <option value="Test Library 2" <?= $library === 'Test Library 2' ? 'selected' : '' ?>>Test Library 2</option>
+                <?php foreach ($libraries as $library_option): ?>
+                  <option value="<?= htmlspecialchars($library_option, ENT_QUOTES, 'UTF-8') ?>" <?= $library === $library_option ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($library_option, ENT_QUOTES, 'UTF-8') ?>
+                  </option>
+                <?php endforeach; ?>
               </select>
             </div>
           </div>
@@ -193,9 +202,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $ad_required === '') {
               <label for="evergreen_type" class="form-label">Account Type</label>
               <select class="form-select" id="evergreen_type" name="evergreen_type">
                 <option value="" <?= $evergreen_type === '' ? 'selected' : '' ?>>Select type</option>
-                <option value="Basic (No Circ)" <?= $evergreen_type === 'Basic (No Circ)' ? 'selected' : '' ?>>Basic (No Circ)</option>
-                <option value="Circ I" <?= $evergreen_type === 'Circ I' ? 'selected' : '' ?>>Circ I</option>
-                <option value="Circ II" <?= $evergreen_type === 'Circ II' ? 'selected' : '' ?>>Circ II</option>
+                <?php foreach ($evergreen_account_types as $account_type): ?>
+                  <option value="<?= htmlspecialchars($account_type, ENT_QUOTES, 'UTF-8') ?>" <?= $evergreen_type === $account_type ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($account_type, ENT_QUOTES, 'UTF-8') ?>
+                  </option>
+                <?php endforeach; ?>
               </select>
             </div>
             <div class="col-md-4 evergreen-fields">
