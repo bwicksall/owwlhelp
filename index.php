@@ -117,8 +117,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($primary_sent && $evergreen_sent) {
             $success_message = 'Your request has been sent.';
             $_POST = [];
-            $email = $library = $requester_notes = $user_name = $start_date = $evergreen_required = $evergreen_type = $cataloging_addon = $ad_required = '';
+            $email = '';
+            $library = '';
+            $requester_notes = '';
+            $user_name = '';
+            $start_date = '';
             $email_groups = [];
+            $evergreen_required = 'No';
+            $evergreen_type = '';
+            $cataloging_addon = 'No';
+            $ad_required = 'No';
         } else {
             $errors[] = 'Your request could not be sent. Please try again or contact support.';
         }
