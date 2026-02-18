@@ -8,6 +8,10 @@ $config = [
         'Test Library 1',
         'Test Library 2',
     ],
+    'listservs' => [
+        'YSL-L',
+        'Holdings',
+    ],
     'evergreen_account_types' => [
         'Basic (No Circ)',
         'Circ I',

@@ -5,6 +5,7 @@ $destination_email = $config['destination_email'] ?? 'bwicksall@owwl.org';
 $primary_email = $config['primary_email'] ?? $destination_email;
 $evergreen_email = $config['evergreen_email'] ?? 'webmaster@owwl.org';
 $libraries = $config['libraries'] ?? ['Test Library 1', 'Test Library 2'];
+$listservs = $config['listservs'] ?? ['YSL-L', 'Holdings'];
 $evergreen_account_types = $config['evergreen_account_types'] ?? ['Basic (No Circ)', 'Circ I', 'Circ II'];
 
 $errors = [];
@@ -23,7 +24,7 @@ $library = post_value('library');
 $requester_notes = post_value('requester_notes');
 $user_name = post_value('user_name');
 $start_date = post_value('start_date');
-$email_groups = isset($_POST['email_groups']) && is_array($_POST['email_groups']) ? $_POST['email_groups'] : [];
+$email_groups = isset($_POST['email_groups']) && is_array($_POST['email_groups']) ? array_values($_POST['email_groups']) : [];
 $evergreen_required = post_value('evergreen_required');
 $evergreen_type = post_value('evergreen_type');
 $cataloging_addon = post_value('cataloging_addon');
@@ -80,7 +81,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $requester_lines[] = "Requester Notes: {$requester_notes}";
         }
 
-        $email_groups_display = $email_groups ? implode(', ', $email_groups) : 'None';
+        $valid_email_groups = array_values(array_intersect($listservs, $email_groups));
+        $email_groups_display = $valid_email_groups ? implode(', ', $valid_email_groups) : 'None';
 
         $email_account_lines = [
             "User Name: {$user_name}",
@@ -212,14 +214,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $ad_required === '') {
             <div class="col-12">
               <label class="form-label">Email Groups/Listservs (optional)</label>
               <div class="d-flex flex-wrap gap-3">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="email_groups[]" id="group_ysl" value="YSL-L" <?= in_array('YSL-L', $email_groups, true) ? 'checked' : '' ?>>
-                  <label class="form-check-label" for="group_ysl">YSL-L</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="email_groups[]" id="group_holdings" value="Holdings" <?= in_array('Holdings', $email_groups, true) ? 'checked' : '' ?>>
-                  <label class="form-check-label" for="group_holdings">Holdings</label>
-                </div>
+                <?php foreach ($listservs as $listserv): ?>
+                  <?php $listserv_id = 'listserv_' . preg_replace('/[^a-z0-9]+/i', '_', strtolower($listserv)); ?>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="email_groups[]" id="<?= htmlspecialchars($listserv_id, ENT_QUOTES, 'UTF-8') ?>" value="<?= htmlspecialchars($listserv, ENT_QUOTES, 'UTF-8') ?>" <?= in_array($listserv, $email_groups, true) ? 'checked' : '' ?>>
+                    <label class="form-check-label" for="<?= htmlspecialchars($listserv_id, ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars($listserv, ENT_QUOTES, 'UTF-8') ?></label>
+                  </div>
+                <?php endforeach; ?>
               </div>
             </div>
           </div>
