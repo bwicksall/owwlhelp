@@ -86,7 +86,7 @@
         <input type="text" class="form-control" id="mod_evergreen_user_id" name="mod_evergreen_user_id" value="<?= h($mod_evergreen_user_id) ?>">
       </div>
       <div class="col-md-4 mod-evergreen-fields">
-        <label for="mod_evergreen_type" class="form-label">Account Type</label>
+        <label for="mod_evergreen_type" class="form-label">Account Type (optional)</label>
         <select class="form-select" id="mod_evergreen_type" name="mod_evergreen_type">
           <option value="" <?= $mod_evergreen_type === '' ? 'selected' : '' ?>>Select type</option>
           <?php foreach ($evergreen_account_types as $account_type): ?>

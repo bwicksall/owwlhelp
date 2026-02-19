@@ -29,9 +29,7 @@ if ($mod_change_evergreen === 'Yes') {
     if ($mod_evergreen_user_id === '') {
         $errors[] = 'Please enter the Evergreen user ID.';
     }
-    if ($mod_evergreen_type === '') {
-        $errors[] = 'Please select an Evergreen account type.';
-    } elseif (!in_array($mod_evergreen_type, $evergreen_account_types, true)) {
+    if ($mod_evergreen_type !== '' && !in_array($mod_evergreen_type, $evergreen_account_types, true)) {
         $errors[] = 'Please select a valid Evergreen account type.';
     }
     if (!valid_yes_no($mod_cataloging_addon)) {
@@ -81,7 +79,7 @@ if (!$errors) {
     ];
     if ($mod_change_evergreen === 'Yes') {
         $evergreen_lines[] = "Evergreen User ID: {$mod_evergreen_user_id}";
-        $evergreen_lines[] = "Evergreen Account Type: {$mod_evergreen_type}";
+        $evergreen_lines[] = 'Evergreen Account Type: ' . ($mod_evergreen_type !== '' ? $mod_evergreen_type : 'None');
         $evergreen_lines[] = "Item Cataloging Add-on Needed: {$mod_cataloging_addon}";
         $evergreen_lines[] = 'Evergreen Notes: ' . ($mod_evergreen_notes !== '' ? $mod_evergreen_notes : 'None');
     }
