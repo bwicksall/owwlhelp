@@ -1,16 +1,25 @@
-const evergreenYes = document.getElementById('evergreen_yes');
-const evergreenNo = document.getElementById('evergreen_no');
-const evergreenFields = document.querySelectorAll('.evergreen-fields');
+function bindYesNoToggle(yesId, noId, selector) {
+  const yesInput = document.getElementById(yesId);
+  const noInput = document.getElementById(noId);
+  const fields = document.querySelectorAll(selector);
 
-function toggleEvergreenFields() {
-  const show = evergreenYes.checked;
-  evergreenFields.forEach((field) => {
-    field.style.display = show ? 'block' : 'none';
-  });
+  if (!yesInput || !noInput || fields.length === 0) {
+    return;
+  }
+
+  const toggle = () => {
+    const show = yesInput.checked;
+    fields.forEach((field) => {
+      field.style.display = show ? 'block' : 'none';
+    });
+  };
+
+  yesInput.addEventListener('change', toggle);
+  noInput.addEventListener('change', toggle);
+  toggle();
 }
 
-if (evergreenYes && evergreenNo) {
-  evergreenYes.addEventListener('change', toggleEvergreenFields);
-  evergreenNo.addEventListener('change', toggleEvergreenFields);
-  toggleEvergreenFields();
-}
+bindYesNoToggle('new_evergreen_yes', 'new_evergreen_no', '.new-evergreen-fields');
+bindYesNoToggle('mod_change_email_yes', 'mod_change_email_no', '.mod-email-fields');
+bindYesNoToggle('mod_change_evergreen_yes', 'mod_change_evergreen_no', '.mod-evergreen-fields');
+bindYesNoToggle('mod_change_ad_yes', 'mod_change_ad_no', '.mod-ad-fields');

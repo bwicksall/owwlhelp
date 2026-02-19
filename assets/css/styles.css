@@ -53,3 +53,37 @@ label {
 .form-text {
   color: #51616b;
 }
+
+.form-selection {
+  margin-top: 1rem;
+}
+
+.selection-card {
+  display: block;
+  height: 100%;
+  padding: 1.25rem;
+  border: 1px solid rgba(15, 98, 123, 0.2);
+  border-radius: 14px;
+  text-decoration: none;
+  color: var(--owwl-ink);
+  background: #f9fcfd;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.selection-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(17, 35, 45, 0.1);
+  color: var(--owwl-ink);
+}
+
+.selection-title {
+  display: block;
+  font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.selection-desc {
+  display: block;
+  color: #51616b;
+}
