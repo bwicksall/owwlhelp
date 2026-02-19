@@ -23,3 +23,4 @@ bindYesNoToggle('new_evergreen_yes', 'new_evergreen_no', '.new-evergreen-fields'
 bindYesNoToggle('mod_change_email_yes', 'mod_change_email_no', '.mod-email-fields');
 bindYesNoToggle('mod_change_evergreen_yes', 'mod_change_evergreen_no', '.mod-evergreen-fields');
 bindYesNoToggle('mod_change_ad_yes', 'mod_change_ad_no', '.mod-ad-fields');
+bindYesNoToggle('del_forward_yes', 'del_forward_no', '.del-forward-fields');

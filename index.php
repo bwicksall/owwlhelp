@@ -6,7 +6,7 @@ $errors = [];
 $success_message = '';
 
 $view = $_GET['form'] ?? 'landing';
-$allowed_views = ['landing', 'new', 'modify'];
+$allowed_views = ['landing', 'new', 'modify', 'delete'];
 if (!in_array($view, $allowed_views, true)) {
     $view = 'landing';
 }
@@ -39,9 +39,16 @@ $mod_change_ad = 'No';
 $mod_ad_user_id = '';
 $mod_ad_notes = '';
 
+// Delete account defaults.
+$del_user_id = '';
+$del_full_name = '';
+$del_last_day = '';
+$del_forward_email = 'No';
+$del_forward_target = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $form_type = post_value('form_type');
-    $view = $form_type === 'new' || $form_type === 'modify' ? $form_type : 'landing';
+    $view = $form_type === 'new' || $form_type === 'modify' || $form_type === 'delete' ? $form_type : 'landing';
 
     $requester_email = post_value('requester_email');
     $requester_library = post_value('requester_library');
@@ -60,6 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         require __DIR__ . '/controllers/new_account.php';
     } elseif ($view === 'modify') {
         require __DIR__ . '/controllers/modify_account.php';
+    } elseif ($view === 'delete') {
+        require __DIR__ . '/controllers/delete_account.php';
     }
 }
 ?>
@@ -105,6 +114,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           require __DIR__ . '/views/new_form.php';
       } elseif ($view === 'modify') {
           require __DIR__ . '/views/modify_form.php';
+      } elseif ($view === 'delete') {
+          require __DIR__ . '/views/delete_form.php';
       } else {
           require __DIR__ . '/views/landing.php';
       }
