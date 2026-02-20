@@ -4,7 +4,9 @@
     <div class="<?= $requester_verified ? 'col-md-12' : 'col-md-6' ?>">
       <label for="requester_email" class="form-label">Requester Email</label>
       <input type="email" class="form-control" id="requester_email" name="requester_email" value="<?= h($requester_email) ?>" required>
-      <div class="form-text">Only approved organization domains can authenticate.</div>
+      <?php if (!$requester_verified): ?>
+        <div class="form-text">Only approved organization domains can authenticate.</div>
+      <?php endif; ?>
       <?php if ($requester_verified): ?>
         <div class="mt-2">
           <span class="badge text-bg-success">Verified for this session</span>
