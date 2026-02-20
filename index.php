@@ -1,9 +1,13 @@
 <?php
+session_start();
+
 require __DIR__ . '/config.php';
 require __DIR__ . '/includes/app.php';
 
 $errors = [];
 $success_message = '';
+$auth_message = '';
+$auth_message_type = '';
 
 $view = $_GET['form'] ?? 'landing';
 $allowed_views = ['landing', 'new', 'modify', 'delete'];
@@ -12,7 +16,7 @@ if (!in_array($view, $allowed_views, true)) {
 }
 
 // Shared requester defaults.
-$requester_email = '';
+$requester_email = requester_get_active_email();
 $requester_library = '';
 $requester_notes = '';
 
@@ -46,29 +50,86 @@ $del_last_day = '';
 $del_forward_email = 'No';
 $del_forward_target = '';
 
+$requester_verified = $requester_email !== '' && requester_is_verified($requester_email);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $auth_action = post_value('auth_action');
     $form_type = post_value('form_type');
     $view = $form_type === 'new' || $form_type === 'modify' || $form_type === 'delete' ? $form_type : 'landing';
 
     $requester_email = post_value('requester_email');
     $requester_library = post_value('requester_library');
     $requester_notes = post_value('requester_notes');
+    $requester_verified = $requester_email !== '' && requester_is_verified($requester_email);
 
-    if ($requester_email === '' || !filter_var($requester_email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = 'Please enter a valid requester email address.';
-    }
-    if ($requester_library === '') {
-        $errors[] = 'Please select a library.';
-    } elseif (!in_array($requester_library, $libraries, true)) {
-        $errors[] = 'Please select a valid library.';
-    }
+    if ($auth_action === 'send_otp') {
+        if ($requester_email === '' || !filter_var($requester_email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = 'Please enter a valid requester email address before requesting an OTP.';
+        } elseif (!email_domain_allowed($requester_email, $allowed_email_domains)) {
+            $errors[] = 'This email domain is not allowed for authentication.';
+        } else {
+            // Starting a new challenge requires a fresh OTP verification.
+            requester_clear_verified($requester_email);
+            $requester_verified = false;
+            requester_set_active_email($requester_email);
+            $otp_code = otp_generate_code();
+            otp_store_challenge($requester_email, $otp_code, $otp_ttl_seconds);
+            $mail_subject = 'OWWL Help OTP Code';
+            $mail_message = "Your OWWL Help verification code is: {$otp_code}\n\nThis code expires in " . (int) round($otp_ttl_seconds / 60) . " minutes.";
+            $mail_headers = "From: {$primary_email}\r\nReply-To: {$primary_email}\r\n";
+            $otp_sent = @mail($requester_email, $mail_subject, $mail_message, $mail_headers);
+            if ($otp_sent) {
+                $auth_message = 'An OTP code has been sent to your email address.';
+                $auth_message_type = 'success';
+            } else {
+                $errors[] = 'Unable to send OTP email. Please try again or contact support.';
+            }
+        }
+    } elseif ($auth_action === 'verify_otp') {
+        $otp_code = post_value('otp_code');
+        if ($requester_email === '' || !filter_var($requester_email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = 'Please enter a valid requester email address before verifying an OTP.';
+        } elseif (!email_domain_allowed($requester_email, $allowed_email_domains)) {
+            $errors[] = 'This email domain is not allowed for authentication.';
+        } elseif ($otp_code === '') {
+            $errors[] = 'Please enter the OTP code.';
+        } elseif (!otp_verify_challenge($requester_email, $otp_code)) {
+            $errors[] = 'The OTP code is invalid or expired.';
+        } else {
+            requester_mark_verified($requester_email);
+            otp_clear_challenge($requester_email);
+            requester_set_active_email($requester_email);
+            $requester_verified = true;
+            $auth_message = 'Email verification successful. The form is now unlocked for this session.';
+            $auth_message_type = 'success';
+        }
+    } else {
+        if ($requester_email === '' || !filter_var($requester_email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = 'Please enter a valid requester email address.';
+        } elseif (!email_domain_allowed($requester_email, $allowed_email_domains)) {
+            $errors[] = 'This email domain is not allowed for authentication.';
+        } elseif (!requester_is_verified($requester_email)) {
+            $errors[] = 'Please complete OTP verification for the requester email before submitting.';
+        } else {
+            $requester_verified = true;
+            requester_set_active_email($requester_email);
+        }
 
-    if ($view === 'new') {
-        require __DIR__ . '/controllers/new_account.php';
-    } elseif ($view === 'modify') {
-        require __DIR__ . '/controllers/modify_account.php';
-    } elseif ($view === 'delete') {
-        require __DIR__ . '/controllers/delete_account.php';
+        if ($requester_verified) {
+            if ($requester_library === '') {
+                $errors[] = 'Please select a library.';
+            } elseif (!in_array($requester_library, $libraries, true)) {
+                $errors[] = 'Please select a valid library.';
+            }
+        }
+
+        if ($view === 'new' && $requester_verified) {
+            require __DIR__ . '/controllers/new_account.php';
+        } elseif ($view === 'modify' && $requester_verified) {
+            require __DIR__ . '/controllers/modify_account.php';
+        } elseif ($view === 'delete' && $requester_verified) {
+            require __DIR__ . '/controllers/delete_account.php';
+        }
     }
 }
 ?>
@@ -107,6 +168,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       <?php if ($success_message): ?>
         <div class="alert alert-success"><?= h($success_message) ?></div>
+      <?php endif; ?>
+      <?php if ($auth_message): ?>
+        <div class="alert alert-<?= h($auth_message_type ?: 'info') ?>"><?= h($auth_message) ?></div>
       <?php endif; ?>
 
       <?php

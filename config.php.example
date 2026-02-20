@@ -17,4 +17,8 @@ $config = [
         'Circ I',
         'Circ II',
     ],
+    'allowed_email_domains' => [
+        'owwl.org',
+    ],
+    'otp_ttl_seconds' => 600,
 ];

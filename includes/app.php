@@ -6,6 +6,8 @@ $evergreen_email = $config['evergreen_email'] ?? 'webmaster@owwl.org';
 $libraries = $config['libraries'] ?? ['Test Library 1', 'Test Library 2'];
 $listservs = $config['listservs'] ?? ['YSL-L', 'Holdings'];
 $evergreen_account_types = $config['evergreen_account_types'] ?? ['Basic (No Circ)', 'Circ I', 'Circ II'];
+$allowed_email_domains = $config['allowed_email_domains'] ?? ['owwl.org'];
+$otp_ttl_seconds = (int) ($config['otp_ttl_seconds'] ?? 600);
 
 function h(string $value): string {
     return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
@@ -31,4 +33,86 @@ function valid_yes_no(string $value): bool {
 
 function selected_from_allowed(array $selected, array $allowed): array {
     return array_values(array_intersect($allowed, $selected));
+}
+
+function normalize_email(string $email): string {
+    return strtolower(trim($email));
+}
+
+function email_domain_allowed(string $email, array $allowed_domains): bool {
+    $parts = explode('@', normalize_email($email));
+    if (count($parts) !== 2 || $parts[1] === '') {
+        return false;
+    }
+    return in_array($parts[1], array_map('strtolower', $allowed_domains), true);
+}
+
+function otp_generate_code(): string {
+    return str_pad((string) random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+}
+
+function otp_store_challenge(string $email, string $code, int $ttl_seconds): void {
+    if (!isset($_SESSION['otp_challenges']) || !is_array($_SESSION['otp_challenges'])) {
+        $_SESSION['otp_challenges'] = [];
+    }
+
+    $_SESSION['otp_challenges'][normalize_email($email)] = [
+        'code_hash' => password_hash($code, PASSWORD_DEFAULT),
+        'expires_at' => time() + max(60, $ttl_seconds),
+    ];
+}
+
+function otp_verify_challenge(string $email, string $code): bool {
+    $normalized = normalize_email($email);
+    $challenge = $_SESSION['otp_challenges'][$normalized] ?? null;
+    if (!$challenge || !isset($challenge['code_hash'], $challenge['expires_at'])) {
+        return false;
+    }
+    if ((int) $challenge['expires_at'] < time()) {
+        unset($_SESSION['otp_challenges'][$normalized]);
+        return false;
+    }
+    return password_verify($code, (string) $challenge['code_hash']);
+}
+
+function requester_mark_verified(string $email): void {
+    if (!isset($_SESSION['verified_emails']) || !is_array($_SESSION['verified_emails'])) {
+        $_SESSION['verified_emails'] = [];
+    }
+    $_SESSION['verified_emails'][normalize_email($email)] = true;
+}
+
+function requester_clear_verified(string $email): void {
+    if (!isset($_SESSION['verified_emails']) || !is_array($_SESSION['verified_emails'])) {
+        return;
+    }
+    $normalized = normalize_email($email);
+    if (isset($_SESSION['verified_emails'][$normalized])) {
+        unset($_SESSION['verified_emails'][$normalized]);
+    }
+}
+
+function requester_is_verified(string $email): bool {
+    if (!isset($_SESSION['verified_emails']) || !is_array($_SESSION['verified_emails'])) {
+        return false;
+    }
+    return !empty($_SESSION['verified_emails'][normalize_email($email)]);
+}
+
+function otp_clear_challenge(string $email): void {
+    $normalized = normalize_email($email);
+    if (isset($_SESSION['otp_challenges'][$normalized])) {
+        unset($_SESSION['otp_challenges'][$normalized]);
+    }
+}
+
+function requester_set_active_email(string $email): void {
+    $_SESSION['active_requester_email'] = normalize_email($email);
+}
+
+function requester_get_active_email(): string {
+    if (!isset($_SESSION['active_requester_email'])) {
+        return '';
+    }
+    return (string) $_SESSION['active_requester_email'];
 }

@@ -1,31 +1,13 @@
 <h2 class="h4 mb-3">Modify existing account request</h2>
 <form method="post" novalidate>
   <input type="hidden" name="form_type" value="modify">
+  <?php require __DIR__ . '/requester_auth.php'; ?>
 
-  <div class="section-card mb-4">
-    <div class="section-title mb-3">Requester</div>
-    <div class="row g-3">
-      <div class="col-md-6">
-        <label for="requester_email" class="form-label">Requester Email</label>
-        <input type="email" class="form-control" id="requester_email" name="requester_email" value="<?= h($requester_email) ?>" required>
-        <div class="form-text">This is used as the sender address.</div>
-      </div>
-      <div class="col-md-6">
-        <label for="requester_library" class="form-label">Library</label>
-        <select class="form-select" id="requester_library" name="requester_library" required>
-          <option value="" <?= $requester_library === '' ? 'selected' : '' ?>>Select a library</option>
-          <?php foreach ($libraries as $library): ?>
-            <option value="<?= h($library) ?>" <?= $requester_library === $library ? 'selected' : '' ?>><?= h($library) ?></option>
-          <?php endforeach; ?>
-        </select>
-      </div>
-      <div class="col-12">
-        <label for="requester_notes" class="form-label">Notes (optional)</label>
-        <textarea class="form-control" id="requester_notes" name="requester_notes" rows="3"><?= h($requester_notes) ?></textarea>
-      </div>
-    </div>
-  </div>
+  <?php if (!$requester_verified): ?>
+    <div class="alert alert-info">Verify your requester email with OTP to unlock the rest of this form.</div>
+  <?php endif; ?>
 
+  <?php if ($requester_verified): ?>
   <div class="section-card mb-4">
     <div class="section-title mb-3">Email Account</div>
     <div class="row g-3 align-items-end">
@@ -145,4 +127,5 @@
   <div class="d-flex justify-content-end">
     <button type="submit" class="btn btn-primary btn-lg">Submit Request</button>
   </div>
+  <?php endif; ?>
 </form>

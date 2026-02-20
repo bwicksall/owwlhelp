@@ -75,7 +75,6 @@ if (!$errors) {
 
     if ($primary_sent && $evergreen_sent) {
         $success_message = 'Your request has been sent.';
-        $requester_email = '';
         $requester_library = '';
         $requester_notes = '';
         $new_user_name = '';
