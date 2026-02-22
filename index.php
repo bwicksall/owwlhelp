@@ -10,7 +10,7 @@ $auth_message = '';
 $auth_message_type = '';
 
 $view = $_GET['form'] ?? 'landing';
-$allowed_views = ['landing', 'new', 'modify', 'delete'];
+$allowed_views = ['landing', 'new', 'modify', 'delete', 'overdrive'];
 if (!in_array($view, $allowed_views, true)) {
     $view = 'landing';
 }
@@ -50,12 +50,16 @@ $del_last_day = '';
 $del_forward_email = 'No';
 $del_forward_target = '';
 
+// Overdrive merge defaults.
+$od_patron_last_name = '';
+$od_new_card_number = '';
+
 $requester_verified = $requester_email !== '' && requester_is_verified($requester_email);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $auth_action = post_value('auth_action');
     $form_type = post_value('form_type');
-    $view = $form_type === 'new' || $form_type === 'modify' || $form_type === 'delete' ? $form_type : 'landing';
+    $view = $form_type === 'new' || $form_type === 'modify' || $form_type === 'delete' || $form_type === 'overdrive' ? $form_type : 'landing';
 
     $requester_email = post_value('requester_email');
     $requester_library = post_value('requester_library');
@@ -129,6 +133,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require __DIR__ . '/controllers/modify_account.php';
         } elseif ($view === 'delete' && $requester_verified) {
             require __DIR__ . '/controllers/delete_account.php';
+        } elseif ($view === 'overdrive' && $requester_verified) {
+            require __DIR__ . '/controllers/overdrive_merge.php';
         }
     }
 }
@@ -180,6 +186,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           require __DIR__ . '/views/modify_form.php';
       } elseif ($view === 'delete') {
           require __DIR__ . '/views/delete_form.php';
+      } elseif ($view === 'overdrive') {
+          require __DIR__ . '/views/overdrive_form.php';
       } else {
           require __DIR__ . '/views/landing.php';
       }

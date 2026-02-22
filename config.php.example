@@ -4,6 +4,7 @@ $config = [
     'default_email' => 'bwicksall@owwl.org',
     'primary_email' => 'bwicksall@owwl.org',
     'evergreen_email' => 'webmaster@owwl.org',
+    'overdrive_email' => 'test@owwl.org',
     'libraries' => [
         'Test Library 1',
         'Test Library 2',
