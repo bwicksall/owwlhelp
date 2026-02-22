@@ -1,3 +1,4 @@
+<?php $show_requester_notes = isset($show_requester_notes) ? (bool) $show_requester_notes : true; ?>
 <div class="section-card mb-4">
   <div class="section-title mb-3">Requester</div>
   <div class="row g-3 align-items-start">
@@ -36,10 +37,12 @@
           <?php endforeach; ?>
         </select>
       </div>
-      <div class="col-12">
-        <label for="requester_notes" class="form-label">Notes (optional)</label>
-        <textarea class="form-control" id="requester_notes" name="requester_notes" rows="3"><?= h($requester_notes) ?></textarea>
-      </div>
+      <?php if ($show_requester_notes): ?>
+        <div class="col-12">
+          <label for="requester_notes" class="form-label">Notes (optional)</label>
+          <textarea class="form-control" id="requester_notes" name="requester_notes" rows="3"><?= h($requester_notes) ?></textarea>
+        </div>
+      <?php endif; ?>
     </div>
   <?php endif; ?>
 </div>

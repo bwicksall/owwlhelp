@@ -10,7 +10,7 @@ $auth_message = '';
 $auth_message_type = '';
 
 $view = $_GET['form'] ?? 'landing';
-$allowed_views = ['landing', 'new', 'modify', 'delete', 'overdrive'];
+$allowed_views = ['landing', 'new', 'modify', 'delete', 'overdrive', 'reference', 'cba'];
 if (!in_array($view, $allowed_views, true)) {
     $view = 'landing';
 }
@@ -54,12 +54,29 @@ $del_forward_target = '';
 $od_patron_last_name = '';
 $od_new_card_number = '';
 
+// Reference question defaults.
+$ref_request_type = '';
+$ref_subject_topic = '';
+$ref_sources_consulted = '';
+$ref_notes_comments = '';
+
+// CBA purchase defaults.
+$cba_author = '';
+$cba_title = '';
+$cba_publisher = '';
+$cba_year = '';
+$cba_isbn = '';
+$cba_subject_topic = '';
+$cba_citation_source = '';
+$cba_notes_comments = '';
+$cba_format = '';
+
 $requester_verified = $requester_email !== '' && requester_is_verified($requester_email);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $auth_action = post_value('auth_action');
     $form_type = post_value('form_type');
-    $view = $form_type === 'new' || $form_type === 'modify' || $form_type === 'delete' || $form_type === 'overdrive' ? $form_type : 'landing';
+    $view = $form_type === 'new' || $form_type === 'modify' || $form_type === 'delete' || $form_type === 'overdrive' || $form_type === 'reference' || $form_type === 'cba' ? $form_type : 'landing';
 
     $requester_email = post_value('requester_email');
     $requester_library = post_value('requester_library');
@@ -135,6 +152,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require __DIR__ . '/controllers/delete_account.php';
         } elseif ($view === 'overdrive' && $requester_verified) {
             require __DIR__ . '/controllers/overdrive_merge.php';
+        } elseif ($view === 'reference' && $requester_verified) {
+            require __DIR__ . '/controllers/reference_question.php';
+        } elseif ($view === 'cba' && $requester_verified) {
+            require __DIR__ . '/controllers/cba_purchase.php';
         }
     }
 }
@@ -188,6 +209,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           require __DIR__ . '/views/delete_form.php';
       } elseif ($view === 'overdrive') {
           require __DIR__ . '/views/overdrive_form.php';
+      } elseif ($view === 'reference') {
+          require __DIR__ . '/views/reference_form.php';
+      } elseif ($view === 'cba') {
+          require __DIR__ . '/views/cba_form.php';
       } else {
           require __DIR__ . '/views/landing.php';
       }

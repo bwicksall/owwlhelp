@@ -87,3 +87,18 @@ label {
   display: block;
   color: #51616b;
 }
+
+.group-shell {
+  padding: 1rem;
+  border: 1px solid rgba(15, 98, 123, 0.18);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.group-title {
+  margin-bottom: 0.8rem;
+  color: var(--owwl-sea);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
