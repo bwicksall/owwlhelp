@@ -1,7 +1,7 @@
 <?php
 
-$destination_email = $config['destination_email'] ?? 'bwicksall@owwl.org';
-$primary_email = $config['primary_email'] ?? $destination_email;
+$default_email = $config['default_email'] ?? 'bwicksall@owwl.org';
+$primary_email = $config['primary_email'] ?? $default_email;
 $evergreen_email = $config['evergreen_email'] ?? 'webmaster@owwl.org';
 $libraries = $config['libraries'] ?? ['Test Library 1', 'Test Library 2'];
 $listservs = $config['listservs'] ?? ['YSL-L', 'Holdings'];

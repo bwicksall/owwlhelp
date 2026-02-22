@@ -1,7 +1,7 @@
 <?php
 
 $config = [
-    'destination_email' => 'bwicksall@owwl.org',
+    'default_email' => 'bwicksall@owwl.org',
     'primary_email' => 'bwicksall@owwl.org',
     'evergreen_email' => 'webmaster@owwl.org',
     'libraries' => [
