@@ -10,7 +10,7 @@ $auth_message = '';
 $auth_message_type = '';
 
 $view = $_GET['form'] ?? 'landing';
-$allowed_views = ['landing', 'new', 'modify', 'delete', 'overdrive', 'reference', 'cba'];
+$allowed_views = ['landing', 'new', 'modify', 'delete', 'overdrive', 'reference', 'cba', 'catalog_issue', 'original_cataloging'];
 if (!in_array($view, $allowed_views, true)) {
     $view = 'landing';
 }
@@ -71,12 +71,40 @@ $cba_citation_source = '';
 $cba_notes_comments = '';
 $cba_format = '';
 
+// Catalog issue defaults.
+$cat_problem = '';
+$cat_material_type = '';
+$cat_format = '';
+$cat_description = '';
+$cat_author = '';
+$cat_title = '';
+$cat_publisher = '';
+$cat_year = '';
+$cat_isbn_ups = '';
+$cat_additional_comments = '';
+
+// Original cataloging defaults.
+$oc_title_subtitle = '';
+$oc_material_type = '';
+$oc_genre_category = '';
+$oc_physical_description = '';
+$oc_summary = '';
+$oc_format = '';
+$oc_additional_format_info = '';
+$oc_author = '';
+$oc_publisher_manufacturer = '';
+$oc_year_details = '';
+$oc_need_by_date = '';
+$oc_additional_material_details = '';
+$oc_additional_comments = '';
+$oc_isbn_upc = '';
+
 $requester_verified = $requester_email !== '' && requester_is_verified($requester_email);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $auth_action = post_value('auth_action');
     $form_type = post_value('form_type');
-    $view = $form_type === 'new' || $form_type === 'modify' || $form_type === 'delete' || $form_type === 'overdrive' || $form_type === 'reference' || $form_type === 'cba' ? $form_type : 'landing';
+    $view = $form_type === 'new' || $form_type === 'modify' || $form_type === 'delete' || $form_type === 'overdrive' || $form_type === 'reference' || $form_type === 'cba' || $form_type === 'catalog_issue' || $form_type === 'original_cataloging' ? $form_type : 'landing';
 
     $requester_email = post_value('requester_email');
     $requester_library = post_value('requester_library');
@@ -156,6 +184,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require __DIR__ . '/controllers/reference_question.php';
         } elseif ($view === 'cba' && $requester_verified) {
             require __DIR__ . '/controllers/cba_purchase.php';
+        } elseif ($view === 'catalog_issue' && $requester_verified) {
+            require __DIR__ . '/controllers/catalog_issue.php';
+        } elseif ($view === 'original_cataloging' && $requester_verified) {
+            require __DIR__ . '/controllers/original_cataloging.php';
         }
     }
 }
@@ -213,6 +245,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           require __DIR__ . '/views/reference_form.php';
       } elseif ($view === 'cba') {
           require __DIR__ . '/views/cba_form.php';
+      } elseif ($view === 'catalog_issue') {
+          require __DIR__ . '/views/catalog_issue_form.php';
+      } elseif ($view === 'original_cataloging') {
+          require __DIR__ . '/views/original_cataloging_form.php';
       } else {
           require __DIR__ . '/views/landing.php';
       }

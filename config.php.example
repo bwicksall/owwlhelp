@@ -7,6 +7,8 @@ $config = [
     'overdrive_email' => 'test@owwl.org',
     'reference_email' => 'test@owwl.org',
     'gpldirector_email' => 'test@owwl.org',
+    'cataloging_email' => 'test@owwl.org',
+    'originalcataloging_email' => 'test@owwl.org',
     'libraries' => [
         'Test Library 1',
         'Test Library 2',

@@ -48,4 +48,22 @@
       </div>
     </div>
   </div>
+
+  <div class="group-shell mt-4">
+    <h3 class="group-title">Cataloging</h3>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <a class="selection-card" href="index.php?form=catalog_issue">
+          <span class="selection-title">Report a catalog issue</span>
+          <span class="selection-desc">Submit catalog record problems including title errors, merges, and field corrections.</span>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a class="selection-card" href="index.php?form=original_cataloging">
+          <span class="selection-title">Request Original Cataloging</span>
+          <span class="selection-desc">Provide title, material details, and summary for new original cataloging records.</span>
+        </a>
+      </div>
+    </div>
+  </div>
 </section>
