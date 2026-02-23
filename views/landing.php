@@ -66,4 +66,40 @@
       </div>
     </div>
   </div>
+
+  <div class="group-shell mt-4">
+    <h3 class="group-title">Evergreen</h3>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <a class="selection-card" href="index.php?form=evergreen_issue">
+          <span class="selection-title">Report an Evergreen issue</span>
+          <span class="selection-desc">Submit Evergreen issues by problem type with a detailed issue description.</span>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a class="selection-card" href="index.php?form=new_copy_location">
+          <span class="selection-title">Request new copy location</span>
+          <span class="selection-desc">Request a new copy location with OPAC visibility, holdable, and circulate settings.</span>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a class="selection-card" href="index.php?form=report_request">
+          <span class="selection-title">Request a report</span>
+          <span class="selection-desc">Request standard reports or provide details for a custom report request.</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="group-shell mt-4">
+    <h3 class="group-title">Tech Support</h3>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <a class="selection-card" href="index.php?form=general_support">
+          <span class="selection-title">General support</span>
+          <span class="selection-desc">Submit a general technical support request with subject and detailed description.</span>
+        </a>
+      </div>
+    </div>
+  </div>
 </section>

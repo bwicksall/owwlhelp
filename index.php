@@ -10,7 +10,7 @@ $auth_message = '';
 $auth_message_type = '';
 
 $view = $_GET['form'] ?? 'landing';
-$allowed_views = ['landing', 'new', 'modify', 'delete', 'overdrive', 'reference', 'cba', 'catalog_issue', 'original_cataloging'];
+$allowed_views = ['landing', 'new', 'modify', 'delete', 'overdrive', 'reference', 'cba', 'catalog_issue', 'original_cataloging', 'evergreen_issue', 'new_copy_location', 'report_request', 'general_support'];
 if (!in_array($view, $allowed_views, true)) {
     $view = 'landing';
 }
@@ -99,12 +99,29 @@ $oc_additional_material_details = '';
 $oc_additional_comments = '';
 $oc_isbn_upc = '';
 
+// Evergreen defaults.
+$eg_problem_type = '';
+$eg_issue = '';
+$ecl_location_name = '';
+$ecl_opac_visible = '';
+$ecl_holdable = '';
+$ecl_circulate = '';
+$ecl_additional_comments = '';
+$er_select_report = '';
+$er_custom_report_description = '';
+$er_other_comments = '';
+$er_deadline = '';
+
+// Tech support defaults.
+$ts_subject = '';
+$ts_description = '';
+
 $requester_verified = $requester_email !== '' && requester_is_verified($requester_email);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $auth_action = post_value('auth_action');
     $form_type = post_value('form_type');
-    $view = $form_type === 'new' || $form_type === 'modify' || $form_type === 'delete' || $form_type === 'overdrive' || $form_type === 'reference' || $form_type === 'cba' || $form_type === 'catalog_issue' || $form_type === 'original_cataloging' ? $form_type : 'landing';
+    $view = $form_type === 'new' || $form_type === 'modify' || $form_type === 'delete' || $form_type === 'overdrive' || $form_type === 'reference' || $form_type === 'cba' || $form_type === 'catalog_issue' || $form_type === 'original_cataloging' || $form_type === 'evergreen_issue' || $form_type === 'new_copy_location' || $form_type === 'report_request' || $form_type === 'general_support' ? $form_type : 'landing';
 
     $requester_email = post_value('requester_email');
     $requester_library = post_value('requester_library');
@@ -188,6 +205,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require __DIR__ . '/controllers/catalog_issue.php';
         } elseif ($view === 'original_cataloging' && $requester_verified) {
             require __DIR__ . '/controllers/original_cataloging.php';
+        } elseif ($view === 'evergreen_issue' && $requester_verified) {
+            require __DIR__ . '/controllers/evergreen_issue.php';
+        } elseif ($view === 'new_copy_location' && $requester_verified) {
+            require __DIR__ . '/controllers/new_copy_location.php';
+        } elseif ($view === 'report_request' && $requester_verified) {
+            require __DIR__ . '/controllers/report_request.php';
+        } elseif ($view === 'general_support' && $requester_verified) {
+            require __DIR__ . '/controllers/general_support.php';
         }
     }
 }
@@ -249,6 +274,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           require __DIR__ . '/views/catalog_issue_form.php';
       } elseif ($view === 'original_cataloging') {
           require __DIR__ . '/views/original_cataloging_form.php';
+      } elseif ($view === 'evergreen_issue') {
+          require __DIR__ . '/views/evergreen_issue_form.php';
+      } elseif ($view === 'new_copy_location') {
+          require __DIR__ . '/views/new_copy_location_form.php';
+      } elseif ($view === 'report_request') {
+          require __DIR__ . '/views/report_request_form.php';
+      } elseif ($view === 'general_support') {
+          require __DIR__ . '/views/general_support_form.php';
       } else {
           require __DIR__ . '/views/landing.php';
       }
