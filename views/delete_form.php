@@ -28,9 +28,9 @@
 
   <div class="section-card mb-4">
     <div class="section-title mb-3">Email Forwarding</div>
-    <div class="row g-3 align-items-end">
-      <div class="col-md-4">
-        <label class="form-label">Forward to another account for 60 days?</label>
+    <div class="row g-3 align-items-start">
+      <div class="col-md-12 col-lg-5">
+        <label class="form-label text-nowrap">Forward to another account for 60 days?</label>
         <div class="d-flex gap-3">
           <div class="form-check">
             <input class="form-check-input" type="radio" name="del_forward_email" id="del_forward_yes" value="Yes" <?= $del_forward_email === 'Yes' ? 'checked' : '' ?> required>
@@ -42,7 +42,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6 del-forward-fields">
+      <div class="col-md-12 col-lg-7 del-forward-fields">
         <label for="del_forward_target" class="form-label">Target Email Address</label>
         <input type="email" class="form-control" id="del_forward_target" name="del_forward_target" value="<?= h($del_forward_target) ?>">
       </div>

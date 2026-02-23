@@ -10,7 +10,7 @@
   <?php if ($requester_verified): ?>
   <div class="section-card mb-4">
     <div class="section-title mb-3">Email Account</div>
-    <div class="row g-3 align-items-end">
+    <div class="row g-3 align-items-start">
       <div class="col-md-4">
         <label class="form-label">Change Email Account?</label>
         <div class="d-flex gap-3">
@@ -49,7 +49,7 @@
 
   <div class="section-card mb-4">
     <div class="section-title mb-3">Evergreen Account</div>
-    <div class="row g-3 align-items-end">
+    <div class="row g-3 align-items-start">
       <div class="col-md-4">
         <label class="form-label">Change Evergreen Account?</label>
         <div class="d-flex gap-3">
