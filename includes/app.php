@@ -1,14 +1,18 @@
 <?php
 
-$default_email = $config['default_email'] ?? 'bwicksall@owwl.org';
+$default_email = trim((string) ($config['default_email'] ?? ''));
+if ($default_email === '') {
+    throw new RuntimeException('Config error: default_email is required.');
+}
+
 $primary_email = $config['primary_email'] ?? $default_email;
-$evergreen_email = $config['evergreen_email'] ?? 'webmaster@owwl.org';
-$overdrive_email = $config['overdrive_email'] ?? 'test@owwl.org';
-$reference_email = $config['reference_email'] ?? 'test@owwl.org';
-$gpldirector_email = $config['gpldirector_email'] ?? 'test@owwl.org';
-$cataloging_email = $config['cataloging_email'] ?? 'test@owwl.org';
-$originalcataloging_email = $config['originalcataloging_email'] ?? 'test@owwl.org';
-$reports_email = $config['reports_email'] ?? 'test@owwl.org';
+$evergreen_email = $config['evergreen_email'] ?? $default_email;
+$overdrive_email = $config['overdrive_email'] ?? $default_email;
+$reference_email = $config['reference_email'] ?? $default_email;
+$gpldirector_email = $config['gpldirector_email'] ?? $default_email;
+$cataloging_email = $config['cataloging_email'] ?? $default_email;
+$originalcataloging_email = $config['originalcataloging_email'] ?? $default_email;
+$reports_email = $config['reports_email'] ?? $default_email;
 $libraries = $config['libraries'] ?? [
     'TEST1' => 'Test Library 1',
     'TEST2' => 'Test Library 2',
