@@ -184,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($requester_verified) {
             if ($requester_library === '') {
                 $errors[] = 'Please select a library.';
-            } elseif (!in_array($requester_library, $libraries, true)) {
+            } elseif (!array_key_exists($requester_library, $libraries)) {
                 $errors[] = 'Please select a valid library.';
             }
         }

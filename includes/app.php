@@ -8,7 +8,11 @@ $reference_email = $config['reference_email'] ?? 'test@owwl.org';
 $gpldirector_email = $config['gpldirector_email'] ?? 'test@owwl.org';
 $cataloging_email = $config['cataloging_email'] ?? 'test@owwl.org';
 $originalcataloging_email = $config['originalcataloging_email'] ?? 'test@owwl.org';
-$libraries = $config['libraries'] ?? ['Test Library 1', 'Test Library 2'];
+$reports_email = $config['reports_email'] ?? 'test@owwl.org';
+$libraries = $config['libraries'] ?? [
+    'TEST1' => 'Test Library 1',
+    'TEST2' => 'Test Library 2',
+];
 $listservs = $config['listservs'] ?? ['YSL-L', 'Holdings'];
 $evergreen_account_types = $config['evergreen_account_types'] ?? ['Basic (No Circ)', 'Circ I', 'Circ II'];
 $allowed_email_domains = $config['allowed_email_domains'] ?? ['owwl.org'];

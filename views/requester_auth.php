@@ -31,9 +31,9 @@
       <div class="col-md-6">
         <label for="requester_library" class="form-label">Library</label>
         <select class="form-select" id="requester_library" name="requester_library" required>
-          <option value="" <?= $requester_library === '' ? 'selected' : '' ?>>Select a library</option>
-          <?php foreach ($libraries as $library): ?>
-            <option value="<?= h($library) ?>" <?= $requester_library === $library ? 'selected' : '' ?>><?= h($library) ?></option>
+          <option value="" <?= $requester_library === '' ? 'selected' : '' ?>>Select A Library</option>
+          <?php foreach ($libraries as $library_code => $library_name): ?>
+            <option value="<?= h((string) $library_code) ?>" <?= $requester_library === (string) $library_code ? 'selected' : '' ?>><?= h((string) $library_name) ?></option>
           <?php endforeach; ?>
         </select>
       </div>
