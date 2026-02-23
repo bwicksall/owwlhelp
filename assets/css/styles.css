@@ -19,6 +19,11 @@ body {
   box-shadow: 0 20px 45px rgba(17, 35, 45, 0.12);
 }
 
+.brand-logo {
+  height: 72px;
+  width: auto;
+}
+
 h1,
 h2,
 h3,

@@ -231,7 +231,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <main class="page-shell">
       <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3 mb-4">
         <div>
-          <h1 class="h2 mb-2">OWWL Help</h1>
+          <a href="/">
+            <img src="assets/images/OWWL_Help.svg" alt="OWWL Help" class="brand-logo mb-2">
+          </a>
           <p class="mb-0 text-muted">Ticketing front end</p>
         </div>
         <?php if ($view !== 'landing'): ?>
