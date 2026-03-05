@@ -1,0 +1,11 @@
+Ticket Type: Modify Existing Account
+Requester Email: {{requester_email}}
+Library: {{requester_library}}
+Requester Notes: {{requester_notes}}
+
+Change Email Account: {{mod_change_email}}
+Email Address: {{mod_email_address}}
+Email Groups/Listservs: {{mod_email_groups}}
+Email Account Notes: {{mod_email_notes}}
+
+{{account_details}}

@@ -20,22 +20,23 @@ if (!valid_yes_no($ecl_circulate)) {
 }
 
 if (!$errors) {
-    $lines = [
-        'Ticket Type: Request New Copy Location',
-        "Requester Email: {$requester_email}",
-        "Library: {$requester_library}",
-        "Location Name: {$ecl_location_name}",
-        "OPAC Visible: {$ecl_opac_visible}",
-        "Holdable: {$ecl_holdable}",
-        "Circulate: {$ecl_circulate}",
-        'Additional Comments: ' . ($ecl_additional_comments !== '' ? $ecl_additional_comments : 'None'),
-    ];
-
     $subject = 'OWWL Help - Request New Copy Location';
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
-    $message = implode("\n", $lines);
+    try {
+        $message = render_email_template('new_copy_location', [
+            'requester_email' => $requester_email,
+            'requester_library' => $requester_library,
+            'ecl_location_name' => $ecl_location_name,
+            'ecl_opac_visible' => $ecl_opac_visible,
+            'ecl_holdable' => $ecl_holdable,
+            'ecl_circulate' => $ecl_circulate,
+            'ecl_additional_comments' => optional_value($ecl_additional_comments),
+        ]);
+    } catch (RuntimeException $e) {
+        $errors[] = 'Email template configuration error. Please contact support.';
+    }
 
-    $mail_sent = @mail($evergreen_email, $subject, $message, $headers);
+    $mail_sent = !$errors ? @mail($evergreen_email, $subject, $message, $headers) : false;
 
     if ($mail_sent) {
         $success_message = 'Your request has been sent.';

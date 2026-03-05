@@ -47,52 +47,58 @@ if ($mod_change_ad === 'Yes' && $mod_ad_user_id === '') {
 if (!$errors) {
     $valid_groups = selected_from_allowed($mod_email_groups, $listservs);
     $groups_display = $valid_groups ? implode(', ', $valid_groups) : 'None';
+    $email_address_value = $mod_change_email === 'Yes' ? $mod_email_address : 'None';
+    $email_groups_value = $mod_change_email === 'Yes' ? $groups_display : 'None';
+    $email_notes_value = $mod_change_email === 'Yes' ? optional_value($mod_email_notes) : 'None';
 
-    $requester_lines = [
-        'Ticket Type: Modify Existing Account',
-        "Requester Email: {$requester_email}",
-        "Library: {$requester_library}",
-    ];
-    if ($requester_notes !== '') {
-        $requester_lines[] = "Requester Notes: {$requester_notes}";
-    }
-
-    $email_account_lines = [
-        "Change Email Account: {$mod_change_email}",
-    ];
-    if ($mod_change_email === 'Yes') {
-        $email_account_lines[] = "Email Address: {$mod_email_address}";
-        $email_account_lines[] = "Email Groups/Listservs: {$groups_display}";
-        $email_account_lines[] = 'Email Account Notes: ' . ($mod_email_notes !== '' ? $mod_email_notes : 'None');
-    }
-
-    $ad_lines = [
-        "Change Active Directory Account: {$mod_change_ad}",
-    ];
+    $primary_account_details = "Change Active Directory Account: {$mod_change_ad}";
     if ($mod_change_ad === 'Yes') {
-        $ad_lines[] = "Active Directory User ID: {$mod_ad_user_id}";
-        $ad_lines[] = 'Please Describe the Change: ' . ($mod_ad_notes !== '' ? $mod_ad_notes : 'None');
+        $primary_account_details .= "\nActive Directory User ID: {$mod_ad_user_id}";
+        $primary_account_details .= "\nPlease Describe the Change: " . optional_value($mod_ad_notes);
     }
 
-    $evergreen_lines = [
-        "Change Evergreen Account: {$mod_change_evergreen}",
-    ];
+    $evergreen_account_details = "Change Evergreen Account: {$mod_change_evergreen}";
     if ($mod_change_evergreen === 'Yes') {
-        $evergreen_lines[] = "Evergreen User ID: {$mod_evergreen_user_id}";
-        $evergreen_lines[] = 'Evergreen Account Type: ' . ($mod_evergreen_type !== '' ? $mod_evergreen_type : 'None');
-        $evergreen_lines[] = "Item Cataloging Add-on Needed: {$mod_cataloging_addon}";
-        $evergreen_lines[] = 'Evergreen Notes: ' . ($mod_evergreen_notes !== '' ? $mod_evergreen_notes : 'None');
+        $evergreen_account_details .= "\nEvergreen User ID: {$mod_evergreen_user_id}";
+        $evergreen_account_details .= "\nEvergreen Account Type: " . optional_value($mod_evergreen_type);
+        $evergreen_account_details .= "\nItem Cataloging Add-on Needed: {$mod_cataloging_addon}";
+        $evergreen_account_details .= "\nEvergreen Notes: " . optional_value($mod_evergreen_notes);
     }
 
     $subject = 'OWWL Help - Modify Existing Account Request';
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
-    $primary_message = implode("\n", array_merge($requester_lines, $email_account_lines, $ad_lines));
-    $evergreen_message = implode("\n", array_merge($requester_lines, $email_account_lines, $evergreen_lines));
+    try {
+        $primary_message = render_email_template('modify_account', [
+            'requester_email' => $requester_email,
+            'requester_library' => $requester_library,
+            'requester_notes' => optional_value($requester_notes),
+            'mod_change_email' => $mod_change_email,
+            'mod_email_address' => $email_address_value,
+            'mod_email_groups' => $email_groups_value,
+            'mod_email_notes' => $email_notes_value,
+            'account_details' => $primary_account_details,
+        ]);
+        $evergreen_message = render_email_template('modify_account', [
+            'requester_email' => $requester_email,
+            'requester_library' => $requester_library,
+            'requester_notes' => optional_value($requester_notes),
+            'mod_change_email' => $mod_change_email,
+            'mod_email_address' => $email_address_value,
+            'mod_email_groups' => $email_groups_value,
+            'mod_email_notes' => $email_notes_value,
+            'account_details' => $evergreen_account_details,
+        ]);
+    } catch (RuntimeException $e) {
+        $errors[] = 'Email template configuration error. Please contact support.';
+    }
 
-    $primary_sent = @mail($primary_email, $subject, $primary_message, $headers);
+    $primary_sent = false;
     $evergreen_sent = true;
-    if ($mod_change_evergreen === 'Yes') {
-        $evergreen_sent = @mail($evergreen_email, $subject, $evergreen_message, $headers);
+    if (!$errors) {
+        $primary_sent = @mail($primary_email, $subject, $primary_message, $headers);
+        if ($mod_change_evergreen === 'Yes') {
+            $evergreen_sent = @mail($evergreen_email, $subject, $evergreen_message, $headers);
+        }
     }
 
     if ($primary_sent && $evergreen_sent) {

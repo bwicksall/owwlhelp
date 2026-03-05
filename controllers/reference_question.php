@@ -11,21 +11,22 @@ if ($ref_request_type === '' || !in_array($ref_request_type, $allowed_request_ty
 }
 
 if (!$errors) {
-    $lines = [
-        'Ticket Type: Ask a Reference Question',
-        "Requester Email: {$requester_email}",
-        "Library: {$requester_library}",
-        "Request Type: {$ref_request_type}",
-        'Subject or Topic: ' . ($ref_subject_topic !== '' ? $ref_subject_topic : 'None'),
-        'Sources Consulted: ' . ($ref_sources_consulted !== '' ? $ref_sources_consulted : 'None'),
-        'Notes or Comments: ' . ($ref_notes_comments !== '' ? $ref_notes_comments : 'None'),
-    ];
-
     $subject = 'OWWL Help - Ask a Reference Question';
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
-    $message = implode("\n", $lines);
+    try {
+        $message = render_email_template('reference_question', [
+            'requester_email' => $requester_email,
+            'requester_library' => $requester_library,
+            'ref_request_type' => $ref_request_type,
+            'ref_subject_topic' => optional_value($ref_subject_topic),
+            'ref_sources_consulted' => optional_value($ref_sources_consulted),
+            'ref_notes_comments' => optional_value($ref_notes_comments),
+        ]);
+    } catch (RuntimeException $e) {
+        $errors[] = 'Email template configuration error. Please contact support.';
+    }
 
-    $mail_sent = @mail($reference_email, $subject, $message, $headers);
+    $mail_sent = !$errors ? @mail($reference_email, $subject, $message, $headers) : false;
 
     if ($mail_sent) {
         $success_message = 'Your request has been sent.';

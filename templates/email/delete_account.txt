@@ -1,0 +1,10 @@
+Ticket Type: Delete Account
+Requester Email: {{requester_email}}
+Library: {{requester_library}}
+Requester Notes: {{requester_notes}}
+
+User ID: {{del_user_id}}
+Full Name: {{del_full_name}}
+User Last Day: {{del_last_day}}
+Forward Email for 60 Days: {{del_forward_email}}
+Forwarding Target Email: {{del_forward_target}}

@@ -28,19 +28,20 @@ if ($eg_issue === '') {
 }
 
 if (!$errors) {
-    $lines = [
-        'Ticket Type: Report an Evergreen Issue',
-        "Requester Email: {$requester_email}",
-        "Library: {$requester_library}",
-        "Problem Type: {$eg_problem_type}",
-        "Issue: {$eg_issue}",
-    ];
-
     $subject = 'OWWL Help - Report an Evergreen Issue';
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
-    $message = implode("\n", $lines);
+    try {
+        $message = render_email_template('evergreen_issue', [
+            'requester_email' => $requester_email,
+            'requester_library' => $requester_library,
+            'eg_problem_type' => $eg_problem_type,
+            'eg_issue' => $eg_issue,
+        ]);
+    } catch (RuntimeException $e) {
+        $errors[] = 'Email template configuration error. Please contact support.';
+    }
 
-    $mail_sent = @mail($evergreen_email, $subject, $message, $headers);
+    $mail_sent = !$errors ? @mail($evergreen_email, $subject, $message, $headers) : false;
 
     if ($mail_sent) {
         $success_message = 'Your request has been sent.';

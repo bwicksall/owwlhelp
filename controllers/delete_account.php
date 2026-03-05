@@ -22,31 +22,29 @@ if ($del_forward_email === 'Yes') {
 }
 
 if (!$errors) {
-    $requester_lines = [
-        'Ticket Type: Delete Account',
-        "Requester Email: {$requester_email}",
-        "Library: {$requester_library}",
-    ];
-    if ($requester_notes !== '') {
-        $requester_lines[] = "Requester Notes: {$requester_notes}";
-    }
-
-    $delete_lines = [
-        "User ID: {$del_user_id}",
-        'Full Name: ' . ($del_full_name !== '' ? $del_full_name : 'None'),
-        "User Last Day: {$del_last_day}",
-        "Forward Email for 60 Days: {$del_forward_email}",
-    ];
-    if ($del_forward_email === 'Yes') {
-        $delete_lines[] = "Forwarding Target Email: {$del_forward_target}";
-    }
-
     $subject = 'OWWL Help - Delete Account Request';
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
-    $message = implode("\n", array_merge($requester_lines, $delete_lines));
+    try {
+        $message = render_email_template('delete_account', [
+            'requester_email' => $requester_email,
+            'requester_library' => $requester_library,
+            'requester_notes' => optional_value($requester_notes),
+            'del_user_id' => $del_user_id,
+            'del_full_name' => optional_value($del_full_name),
+            'del_last_day' => $del_last_day,
+            'del_forward_email' => $del_forward_email,
+            'del_forward_target' => $del_forward_email === 'Yes' ? $del_forward_target : 'None',
+        ]);
+    } catch (RuntimeException $e) {
+        $errors[] = 'Email template configuration error. Please contact support.';
+    }
 
-    $primary_sent = @mail($primary_email, $subject, $message, $headers);
-    $evergreen_sent = @mail($evergreen_email, $subject, $message, $headers);
+    $primary_sent = false;
+    $evergreen_sent = false;
+    if (!$errors) {
+        $primary_sent = @mail($primary_email, $subject, $message, $headers);
+        $evergreen_sent = @mail($evergreen_email, $subject, $message, $headers);
+    }
 
     if ($primary_sent && $evergreen_sent) {
         $success_message = 'Your request has been sent.';

@@ -129,3 +129,29 @@ function requester_get_active_email(): string {
     }
     return (string) $_SESSION['active_requester_email'];
 }
+
+function optional_value(string $value, string $fallback = 'None'): string {
+    return $value !== '' ? $value : $fallback;
+}
+
+function render_email_template(string $template_name, array $values = []): string {
+    $template_path = __DIR__ . '/../templates/email/' . $template_name . '.txt';
+    if (!is_file($template_path) || !is_readable($template_path)) {
+        throw new RuntimeException("Email template not found: {$template_name}");
+    }
+
+    $template = file_get_contents($template_path);
+    if ($template === false) {
+        throw new RuntimeException("Unable to read email template: {$template_name}");
+    }
+
+    $replacements = [];
+    foreach ($values as $key => $value) {
+        if (!is_scalar($value) && $value !== null) {
+            continue;
+        }
+        $replacements['{{' . (string) $key . '}}'] = (string) ($value ?? '');
+    }
+
+    return strtr($template, $replacements);
+}

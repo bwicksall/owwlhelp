@@ -11,22 +11,21 @@ if ($od_new_card_number === '') {
 }
 
 if (!$errors) {
-    $lines = [
-        'Ticket Type: Overdrive Account Merge',
-        "Requester Email: {$requester_email}",
-        "Library: {$requester_library}",
-    ];
-    if ($requester_notes !== '') {
-        $lines[] = "Requester Notes: {$requester_notes}";
-    }
-    $lines[] = "Patron Last Name: {$od_patron_last_name}";
-    $lines[] = "New Library Card Number: {$od_new_card_number}";
-
     $subject = 'OWWL Help - Overdrive Account Merge';
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
-    $message = implode("\n", $lines);
+    try {
+        $message = render_email_template('overdrive_merge', [
+            'requester_email' => $requester_email,
+            'requester_library' => $requester_library,
+            'requester_notes' => optional_value($requester_notes),
+            'od_patron_last_name' => $od_patron_last_name,
+            'od_new_card_number' => $od_new_card_number,
+        ]);
+    } catch (RuntimeException $e) {
+        $errors[] = 'Email template configuration error. Please contact support.';
+    }
 
-    $mail_sent = @mail($overdrive_email, $subject, $message, $headers);
+    $mail_sent = !$errors ? @mail($overdrive_email, $subject, $message, $headers) : false;
 
     if ($mail_sent) {
         $success_message = 'Your request has been sent.';

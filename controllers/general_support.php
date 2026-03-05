@@ -11,19 +11,20 @@ if ($ts_description === '') {
 }
 
 if (!$errors) {
-    $lines = [
-        'Ticket Type: General Support',
-        "Requester Email: {$requester_email}",
-        "Library: {$requester_library}",
-        "Subject: {$ts_subject}",
-        "Description: {$ts_description}",
-    ];
-
     $subject = 'OWWL Help - General Support';
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
-    $message = implode("\n", $lines);
+    try {
+        $message = render_email_template('general_support', [
+            'requester_email' => $requester_email,
+            'requester_library' => $requester_library,
+            'ts_subject' => $ts_subject,
+            'ts_description' => $ts_description,
+        ]);
+    } catch (RuntimeException $e) {
+        $errors[] = 'Email template configuration error. Please contact support.';
+    }
 
-    $mail_sent = @mail($primary_email, $subject, $message, $headers);
+    $mail_sent = !$errors ? @mail($primary_email, $subject, $message, $headers) : false;
 
     if ($mail_sent) {
         $success_message = 'Your request has been sent.';

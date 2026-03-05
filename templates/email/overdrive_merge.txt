@@ -1,0 +1,7 @@
+Ticket Type: Overdrive Account Merge
+Requester Email: {{requester_email}}
+Library: {{requester_library}}
+Requester Notes: {{requester_notes}}
+
+Patron Last Name: {{od_patron_last_name}}
+New Library Card Number: {{od_new_card_number}}

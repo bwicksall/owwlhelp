@@ -1,0 +1,8 @@
+Ticket Type: Ask a Reference Question
+Requester Email: {{requester_email}}
+Library: {{requester_library}}
+
+Request Type: {{ref_request_type}}
+Subject or Topic: {{ref_subject_topic}}
+Sources Consulted: {{ref_sources_consulted}}
+Notes or Comments: {{ref_notes_comments}}

@@ -29,27 +29,28 @@ if ($cat_description === '') {
 }
 
 if (!$errors) {
-    $lines = [
-        'Ticket Type: Report a Catalog Issue',
-        "Requester Email: {$requester_email}",
-        "Library: {$requester_library}",
-        "Problem: {$cat_problem}",
-        'Material Type: ' . ($cat_material_type !== '' ? $cat_material_type : 'None'),
-        'Format: ' . ($cat_format !== '' ? $cat_format : 'None'),
-        "Description: {$cat_description}",
-        'Author: ' . ($cat_author !== '' ? $cat_author : 'None'),
-        'Title: ' . ($cat_title !== '' ? $cat_title : 'None'),
-        'Publisher: ' . ($cat_publisher !== '' ? $cat_publisher : 'None'),
-        'Year: ' . ($cat_year !== '' ? $cat_year : 'None'),
-        'ISBN or UPS: ' . ($cat_isbn_ups !== '' ? $cat_isbn_ups : 'None'),
-        'Additional Comments: ' . ($cat_additional_comments !== '' ? $cat_additional_comments : 'None'),
-    ];
-
     $subject = 'OWWL Help - Report a Catalog Issue';
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
-    $message = implode("\n", $lines);
+    try {
+        $message = render_email_template('catalog_issue', [
+            'requester_email' => $requester_email,
+            'requester_library' => $requester_library,
+            'cat_problem' => $cat_problem,
+            'cat_material_type' => optional_value($cat_material_type),
+            'cat_format' => optional_value($cat_format),
+            'cat_description' => $cat_description,
+            'cat_author' => optional_value($cat_author),
+            'cat_title' => optional_value($cat_title),
+            'cat_publisher' => optional_value($cat_publisher),
+            'cat_year' => optional_value($cat_year),
+            'cat_isbn_ups' => optional_value($cat_isbn_ups),
+            'cat_additional_comments' => optional_value($cat_additional_comments),
+        ]);
+    } catch (RuntimeException $e) {
+        $errors[] = 'Email template configuration error. Please contact support.';
+    }
 
-    $mail_sent = @mail($cataloging_email, $subject, $message, $headers);
+    $mail_sent = !$errors ? @mail($cataloging_email, $subject, $message, $headers) : false;
 
     if ($mail_sent) {
         $success_message = 'Your request has been sent.';

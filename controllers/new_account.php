@@ -34,43 +34,45 @@ if (!valid_yes_no($new_ad_required)) {
 if (!$errors) {
     $valid_groups = selected_from_allowed($new_email_groups, $listservs);
     $groups_display = $valid_groups ? implode(', ', $valid_groups) : 'None';
-
-    $requester_lines = [
-        'Ticket Type: New User Account',
-        "Requester Email: {$requester_email}",
-        "Library: {$requester_library}",
-    ];
-    if ($requester_notes !== '') {
-        $requester_lines[] = "Requester Notes: {$requester_notes}";
-    }
-
-    $email_account_lines = [
-        "User Name: {$new_user_name}",
-        "Start Date: {$new_start_date}",
-        "Email Groups/Listservs: {$groups_display}",
-    ];
-
-    $ad_lines = [
-        "Active Directory Account Needed: {$new_ad_required}",
-    ];
-
-    $evergreen_lines = [
-        "Evergreen Account Required: {$new_evergreen_required}",
-    ];
+    $primary_account_details = "Active Directory Account Needed: {$new_ad_required}";
+    $evergreen_account_details = "Evergreen Account Required: {$new_evergreen_required}";
     if ($new_evergreen_required === 'Yes') {
-        $evergreen_lines[] = "Evergreen Account Type: {$new_evergreen_type}";
-        $evergreen_lines[] = "Item Cataloging Add-on Needed: {$new_cataloging_addon}";
+        $evergreen_account_details .= "\nEvergreen Account Type: {$new_evergreen_type}";
+        $evergreen_account_details .= "\nItem Cataloging Add-on Needed: {$new_cataloging_addon}";
     }
 
     $subject = 'OWWL Help - New User Account Request';
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
-    $primary_message = implode("\n", array_merge($requester_lines, $email_account_lines, $ad_lines));
-    $evergreen_message = implode("\n", array_merge($requester_lines, $email_account_lines, $evergreen_lines));
+    try {
+        $primary_message = render_email_template('new_account', [
+            'requester_email' => $requester_email,
+            'requester_library' => $requester_library,
+            'requester_notes' => optional_value($requester_notes),
+            'new_user_name' => $new_user_name,
+            'new_start_date' => $new_start_date,
+            'email_groups' => $groups_display,
+            'account_details' => $primary_account_details,
+        ]);
+        $evergreen_message = render_email_template('new_account', [
+            'requester_email' => $requester_email,
+            'requester_library' => $requester_library,
+            'requester_notes' => optional_value($requester_notes),
+            'new_user_name' => $new_user_name,
+            'new_start_date' => $new_start_date,
+            'email_groups' => $groups_display,
+            'account_details' => $evergreen_account_details,
+        ]);
+    } catch (RuntimeException $e) {
+        $errors[] = 'Email template configuration error. Please contact support.';
+    }
 
-    $primary_sent = @mail($primary_email, $subject, $primary_message, $headers);
+    $primary_sent = false;
     $evergreen_sent = true;
-    if ($new_evergreen_required === 'Yes') {
-        $evergreen_sent = @mail($evergreen_email, $subject, $evergreen_message, $headers);
+    if (!$errors) {
+        $primary_sent = @mail($primary_email, $subject, $primary_message, $headers);
+        if ($new_evergreen_required === 'Yes') {
+            $evergreen_sent = @mail($evergreen_email, $subject, $evergreen_message, $headers);
+        }
     }
 
     if ($primary_sent && $evergreen_sent) {

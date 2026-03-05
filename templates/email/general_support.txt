@@ -1,0 +1,6 @@
+Ticket Type: General Support
+Requester Email: {{requester_email}}
+Library: {{requester_library}}
+
+Subject: {{ts_subject}}
+Description: {{ts_description}}

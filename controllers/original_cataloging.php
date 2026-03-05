@@ -43,31 +43,32 @@ if ($oc_additional_format_info !== '' && !in_array($oc_additional_format_info, $
 }
 
 if (!$errors) {
-    $lines = [
-        'Ticket Type: Request Original Cataloging',
-        "Requester Email: {$requester_email}",
-        "Library: {$requester_library}",
-        "Title and Subtitle: {$oc_title_subtitle}",
-        "Material Type: {$oc_material_type}",
-        "Genre or Category: {$oc_genre_category}",
-        "Physical Description: {$oc_physical_description}",
-        "Summary: {$oc_summary}",
-        'Format: ' . ($oc_format !== '' ? $oc_format : 'None'),
-        'Additional Format Information: ' . ($oc_additional_format_info !== '' ? $oc_additional_format_info : 'None'),
-        'Author: ' . ($oc_author !== '' ? $oc_author : 'None'),
-        'Publisher or Manufacturer: ' . ($oc_publisher_manufacturer !== '' ? $oc_publisher_manufacturer : 'None'),
-        'Year Details: ' . ($oc_year_details !== '' ? $oc_year_details : 'None'),
-        'Record Need-by Date: ' . ($oc_need_by_date !== '' ? $oc_need_by_date : 'None'),
-        'Additional Material Type Details: ' . ($oc_additional_material_details !== '' ? $oc_additional_material_details : 'None'),
-        'Additional Comments: ' . ($oc_additional_comments !== '' ? $oc_additional_comments : 'None'),
-        'ISBN or UPC: ' . ($oc_isbn_upc !== '' ? $oc_isbn_upc : 'None'),
-    ];
-
     $subject = 'OWWL Help - Request Original Cataloging';
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
-    $message = implode("\n", $lines);
+    try {
+        $message = render_email_template('original_cataloging', [
+            'requester_email' => $requester_email,
+            'requester_library' => $requester_library,
+            'oc_title_subtitle' => $oc_title_subtitle,
+            'oc_material_type' => $oc_material_type,
+            'oc_genre_category' => $oc_genre_category,
+            'oc_physical_description' => $oc_physical_description,
+            'oc_summary' => $oc_summary,
+            'oc_format' => optional_value($oc_format),
+            'oc_additional_format_info' => optional_value($oc_additional_format_info),
+            'oc_author' => optional_value($oc_author),
+            'oc_publisher_manufacturer' => optional_value($oc_publisher_manufacturer),
+            'oc_year_details' => optional_value($oc_year_details),
+            'oc_need_by_date' => optional_value($oc_need_by_date),
+            'oc_additional_material_details' => optional_value($oc_additional_material_details),
+            'oc_additional_comments' => optional_value($oc_additional_comments),
+            'oc_isbn_upc' => optional_value($oc_isbn_upc),
+        ]);
+    } catch (RuntimeException $e) {
+        $errors[] = 'Email template configuration error. Please contact support.';
+    }
 
-    $mail_sent = @mail($originalcataloging_email, $subject, $message, $headers);
+    $mail_sent = !$errors ? @mail($originalcataloging_email, $subject, $message, $headers) : false;
 
     if ($mail_sent) {
         $success_message = 'Your request has been sent.';

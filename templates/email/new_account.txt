@@ -1,0 +1,14 @@
+Ticket Type: New User Account
+
+Requester Email: {{requester_email}}
+Library: {{requester_library}}
+
+Notes:
+
+{{requester_notes}}
+
+User Name: {{new_user_name}}
+Start Date: {{new_start_date}}
+Email Groups/Listservs: {{email_groups}}
+
+{{account_details}}

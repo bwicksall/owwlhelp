@@ -1,0 +1,9 @@
+Ticket Type: Request New Copy Location
+Requester Email: {{requester_email}}
+Library: {{requester_library}}
+
+Location Name: {{ecl_location_name}}
+OPAC Visible: {{ecl_opac_visible}}
+Holdable: {{ecl_holdable}}
+Circulate: {{ecl_circulate}}
+Additional Comments: {{ecl_additional_comments}}

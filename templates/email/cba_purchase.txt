@@ -1,0 +1,13 @@
+Ticket Type: Request a CBA Purchase
+Requester Email: {{requester_email}}
+Library: {{requester_library}}
+
+Author: {{cba_author}}
+Title: {{cba_title}}
+Publisher: {{cba_publisher}}
+Year: {{cba_year}}
+ISBN: {{cba_isbn}}
+Subject or Topic: {{cba_subject_topic}}
+Citation Source: {{cba_citation_source}}
+Notes or Comments: {{cba_notes_comments}}
+Format: {{cba_format}}

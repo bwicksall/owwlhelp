@@ -1,0 +1,14 @@
+Ticket Type: Report a Catalog Issue
+Requester Email: {{requester_email}}
+Library: {{requester_library}}
+
+Problem: {{cat_problem}}
+Material Type: {{cat_material_type}}
+Format: {{cat_format}}
+Description: {{cat_description}}
+Author: {{cat_author}}
+Title: {{cat_title}}
+Publisher: {{cat_publisher}}
+Year: {{cat_year}}
+ISBN or UPS: {{cat_isbn_ups}}
+Additional Comments: {{cat_additional_comments}}

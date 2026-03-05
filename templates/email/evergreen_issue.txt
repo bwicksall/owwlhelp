@@ -1,0 +1,6 @@
+Ticket Type: Report an Evergreen Issue
+Requester Email: {{requester_email}}
+Library: {{requester_library}}
+
+Problem Type: {{eg_problem_type}}
+Issue: {{eg_issue}}
