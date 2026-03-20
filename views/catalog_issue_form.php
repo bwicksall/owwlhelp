@@ -5,7 +5,7 @@
   <?php require __DIR__ . '/requester_auth.php'; ?>
 
   <?php if (!$requester_verified): ?>
-    <div class="alert alert-info">Verify your requester email with OTP to unlock the rest of this form.</div>
+    <div class="alert alert-info">Verify your email address to unlock the rest of this form.</div>
   <?php endif; ?>
 
   <?php if ($requester_verified): ?>

@@ -118,6 +118,8 @@ $ts_description = '';
 
 $requester_verified = $requester_email !== '' && requester_is_verified($requester_email);
 
+$otp_sent = false;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $auth_action = post_value('auth_action');
     $form_type = post_value('form_type');
@@ -147,6 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($otp_sent) {
                 $auth_message = 'An OTP code has been sent to your email address.';
                 $auth_message_type = 'success';
+                $otp_sent = true;
             } else {
                 $errors[] = 'Unable to send OTP email. Please try again or contact support.';
             }

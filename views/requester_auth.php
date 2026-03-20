@@ -20,8 +20,12 @@
         <input type="text" class="form-control" id="otp_code" name="otp_code" inputmode="numeric" maxlength="6" placeholder="Enter 6-digit code">
       </div>
       <div class="col-12 d-flex flex-wrap gap-2">
-        <button type="submit" class="btn btn-outline-primary" name="auth_action" value="send_otp" formnovalidate>Send OTP</button>
-        <button type="submit" class="btn btn-outline-secondary" name="auth_action" value="verify_otp" formnovalidate>Verify OTP</button>
+        <?php if (!$otp_sent): ?>
+          <button type="submit" class="btn btn-primary" name="auth_action" value="send_otp" formnovalidate>Send OTP Code</button>
+        <?php else: ?>
+          <button type="submit" class="btn btn-outline-secondary" name="auth_action" value="send_otp" formnovalidate>Resend OTP Code</button>
+          <button type="submit" class="btn btn-primary" name="auth_action" value="verify_otp" formnovalidate>Verify OTP Code</button>
+        <?php endif; ?>
       </div>
     <?php endif; ?>
   </div>
