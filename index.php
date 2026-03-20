@@ -156,6 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     } elseif ($auth_action === 'verify_otp') {
         $otp_code = post_value('otp_code');
+        $otp_sent = true;
         if ($requester_email === '' || !filter_var($requester_email, FILTER_VALIDATE_EMAIL)) {
             $errors[] = 'Please enter a valid requester email address before verifying an OTP.';
         } elseif (!email_domain_allowed($requester_email, $allowed_email_domains)) {
