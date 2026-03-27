@@ -1,0 +1,5 @@
+Ticket Type: Other Admin Questions
+Requester Email: {{requester_email}}
+Library: {{requester_library}}
+
+Question: {{admin_question}}

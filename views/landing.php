@@ -32,6 +32,24 @@
   </div>
 
   <div class="group-shell">
+    <h3 class="group-title">Admin</h3>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <a class="selection-card" href="index.php?form=delivery">
+          <span class="selection-title">Delivery Questions</span>
+          <span class="selection-desc">Submit delivery-related administrative questions.</span>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a class="selection-card" href="index.php?form=admin">
+          <span class="selection-title">Other Admin Questions</span>
+          <span class="selection-desc">Submit other administrative questions to the admin team.</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="group-shell mt-4">
     <h3 class="group-title">Central Library</h3>
     <div class="row g-3">
       <div class="col-md-6">

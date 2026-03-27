@@ -10,7 +10,7 @@ $auth_message = '';
 $auth_message_type = '';
 
 $view = $_GET['form'] ?? 'landing';
-$allowed_views = ['landing', 'new', 'modify', 'delete', 'overdrive', 'reference', 'cba', 'catalog_issue', 'original_cataloging', 'evergreen_issue', 'new_copy_location', 'report_request', 'general_support'];
+$allowed_views = ['landing', 'new', 'modify', 'delete', 'overdrive', 'delivery', 'admin', 'reference', 'cba', 'catalog_issue', 'original_cataloging', 'evergreen_issue', 'new_copy_location', 'report_request', 'general_support'];
 if (!in_array($view, $allowed_views, true)) {
     $view = 'landing';
 }
@@ -53,6 +53,10 @@ $del_forward_target = '';
 // Overdrive merge defaults.
 $od_patron_last_name = '';
 $od_new_card_number = '';
+
+// Admin defaults.
+$delivery_question = '';
+$admin_question = '';
 
 // Reference question defaults.
 $ref_request_type = '';
@@ -123,7 +127,7 @@ $otp_sent = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $auth_action = post_value('auth_action');
     $form_type = post_value('form_type');
-    $view = $form_type === 'new' || $form_type === 'modify' || $form_type === 'delete' || $form_type === 'overdrive' || $form_type === 'reference' || $form_type === 'cba' || $form_type === 'catalog_issue' || $form_type === 'original_cataloging' || $form_type === 'evergreen_issue' || $form_type === 'new_copy_location' || $form_type === 'report_request' || $form_type === 'general_support' ? $form_type : 'landing';
+    $view = $form_type === 'new' || $form_type === 'modify' || $form_type === 'delete' || $form_type === 'overdrive' || $form_type === 'delivery' || $form_type === 'admin' || $form_type === 'reference' || $form_type === 'cba' || $form_type === 'catalog_issue' || $form_type === 'original_cataloging' || $form_type === 'evergreen_issue' || $form_type === 'new_copy_location' || $form_type === 'report_request' || $form_type === 'general_support' ? $form_type : 'landing';
 
     $requester_email = post_value('requester_email');
     $requester_library = post_value('requester_library');
@@ -201,6 +205,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require __DIR__ . '/controllers/delete_account.php';
         } elseif ($view === 'overdrive' && $requester_verified) {
             require __DIR__ . '/controllers/overdrive_merge.php';
+        } elseif ($view === 'delivery' && $requester_verified) {
+            require __DIR__ . '/controllers/delivery_questions.php';
+        } elseif ($view === 'admin' && $requester_verified) {
+            require __DIR__ . '/controllers/other_admin_questions.php';
         } elseif ($view === 'reference' && $requester_verified) {
             require __DIR__ . '/controllers/reference_question.php';
         } elseif ($view === 'cba' && $requester_verified) {
@@ -272,6 +280,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           require __DIR__ . '/views/delete_form.php';
       } elseif ($view === 'overdrive') {
           require __DIR__ . '/views/overdrive_form.php';
+      } elseif ($view === 'delivery') {
+          require __DIR__ . '/views/delivery_form.php';
+      } elseif ($view === 'admin') {
+          require __DIR__ . '/views/admin_form.php';
       } elseif ($view === 'reference') {
           require __DIR__ . '/views/reference_form.php';
       } elseif ($view === 'cba') {
