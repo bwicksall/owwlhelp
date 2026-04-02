@@ -50,7 +50,7 @@ $del_last_day = '';
 $del_forward_email = 'No';
 $del_forward_target = '';
 
-// Overdrive merge defaults.
+// OverDrive merge defaults.
 $od_patron_last_name = '';
 $od_new_card_number = '';
 
@@ -246,7 +246,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <a href="/">
             <img src="assets/images/OWWL_Help.svg" alt="OWWL Help" class="brand-logo mb-2">
           </a>
-          <p class="mb-0 text-muted">Ticketing front end</p>
         </div>
         <?php if ($view !== 'landing'): ?>
           <a class="btn btn-outline-secondary btn-sm" href="index.php">Back to Form Selection</a>

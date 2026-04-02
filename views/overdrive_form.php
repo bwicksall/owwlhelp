@@ -1,4 +1,4 @@
-<h2 class="h4 mb-3">Overdrive account merge</h2>
+<h2 class="h4 mb-3">OverDrive account merge</h2>
 <form method="post" novalidate>
   <input type="hidden" name="form_type" value="overdrive">
   <?php require __DIR__ . '/requester_auth.php'; ?>

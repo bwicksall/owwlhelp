@@ -1,4 +1,4 @@
-Ticket Type: Overdrive Account Merge
+Ticket Type: OverDrive Account Merge
 Requester Email: {{requester_email}}
 Library: {{requester_library}}
 Requester Notes: {{requester_notes}}

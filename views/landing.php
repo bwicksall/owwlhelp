@@ -24,7 +24,7 @@
       </div>
       <div class="col-md-6">
         <a class="selection-card" href="index.php?form=overdrive">
-          <span class="selection-title">Overdrive account merge</span>
+          <span class="selection-title">OverDrive account merge</span>
           <span class="selection-desc">Submit a patron last name and new card number to request an account merge.</span>
         </a>
       </div>
