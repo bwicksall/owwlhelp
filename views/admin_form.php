@@ -1,5 +1,5 @@
 <?php $show_requester_notes = false; ?>
-<h2 class="h4 mb-3">Other Admin Questions</h2>
+<h2 class="h4 mb-3">Other admin questions</h2>
 <form method="post" novalidate>
   <input type="hidden" name="form_type" value="admin">
   <?php require __DIR__ . '/requester_auth.php'; ?>

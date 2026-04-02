@@ -7,7 +7,7 @@ if ($admin_question === '') {
 }
 
 if (!$errors) {
-    $subject = 'OWWL Help - Other Admin Questions';
+    $subject = 'OWWL Help - Other admin questions';
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
     try {
         $message = render_email_template('other_admin_questions', [

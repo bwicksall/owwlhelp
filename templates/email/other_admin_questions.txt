@@ -1,4 +1,4 @@
-Ticket Type: Other Admin Questions
+Ticket Type: Other admin questions
 Requester Email: {{requester_email}}
 Library: {{requester_library}}
 

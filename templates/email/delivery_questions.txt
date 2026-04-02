@@ -1,4 +1,4 @@
-Ticket Type: Delivery Questions
+Ticket Type: Delivery questions
 Requester Email: {{requester_email}}
 Library: {{requester_library}}
 

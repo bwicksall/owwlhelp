@@ -1,5 +1,5 @@
 <?php $show_requester_notes = false; ?>
-<h2 class="h4 mb-3">Delivery Questions</h2>
+<h2 class="h4 mb-3">Delivery questions</h2>
 <form method="post" novalidate>
   <input type="hidden" name="form_type" value="delivery">
   <?php require __DIR__ . '/requester_auth.php'; ?>

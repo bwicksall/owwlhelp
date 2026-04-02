@@ -39,13 +39,13 @@
     <div class="row g-3">
       <div class="col-md-6">
         <a class="selection-card" href="index.php?form=delivery">
-          <span class="selection-title">Delivery Questions</span>
+          <span class="selection-title">Delivery questions</span>
           <span class="selection-desc">Submit delivery-related administrative questions.</span>
         </a>
       </div>
       <div class="col-md-6">
         <a class="selection-card" href="index.php?form=admin">
-          <span class="selection-title">Other Admin Questions</span>
+          <span class="selection-title">Other admin questions</span>
           <span class="selection-desc">Submit other administrative questions to the admin team.</span>
         </a>
       </div>
@@ -85,7 +85,7 @@
       </div>
       <div class="col-md-6">
         <a class="selection-card" href="index.php?form=original_cataloging">
-          <span class="selection-title">Request Original Cataloging</span>
+          <span class="selection-title">Request original cataloging</span>
           <span class="selection-desc">Provide title, material details, and summary for new original cataloging records.</span>
         </a>
       </div>

@@ -43,7 +43,7 @@ if ($oc_additional_format_info !== '' && !in_array($oc_additional_format_info, $
 }
 
 if (!$errors) {
-    $subject = 'OWWL Help - Request Original Cataloging';
+    $subject = 'OWWL Help - Request original cataloging';
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
     try {
         $message = render_email_template('original_cataloging', [

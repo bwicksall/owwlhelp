@@ -1,4 +1,4 @@
-Ticket Type: Request Original Cataloging
+Ticket Type: Request original cataloging
 Requester Email: {{requester_email}}
 Library: {{requester_library}}
 
