@@ -1,6 +1,7 @@
 <section class="form-selection">
   <h2 class="h4 mb-3">Select a request type</h2>
 
+  <?php if (form_group_visible('account_management')): ?>
   <div class="group-shell mb-4">
     <h3 class="group-title">Account Management</h3>
     <div class="row g-3">
@@ -30,8 +31,10 @@
       </div>
     </div>
   </div>
+  <?php endif; ?>
 
-  <div class="group-shell">
+  <?php if (form_group_visible('admin')): ?>
+  <div class="group-shell <?= form_group_visible('account_management') ? 'mt-4' : 'mb-4' ?>">
     <h3 class="group-title">Admin</h3>
     <div class="row g-3">
       <div class="col-md-6">
@@ -48,7 +51,9 @@
       </div>
     </div>
   </div>
+  <?php endif; ?>
 
+  <?php if (form_group_visible('central_library')): ?>
   <div class="group-shell mt-4">
     <h3 class="group-title">Central Library</h3>
     <div class="row g-3">
@@ -66,7 +71,9 @@
       </div>
     </div>
   </div>
+  <?php endif; ?>
 
+  <?php if (form_group_visible('cataloging')): ?>
   <div class="group-shell mt-4">
     <h3 class="group-title">Cataloging</h3>
     <div class="row g-3">
@@ -84,7 +91,9 @@
       </div>
     </div>
   </div>
+  <?php endif; ?>
 
+  <?php if (form_group_visible('evergreen')): ?>
   <div class="group-shell mt-4">
     <h3 class="group-title">Evergreen</h3>
     <div class="row g-3">
@@ -108,7 +117,9 @@
       </div>
     </div>
   </div>
+  <?php endif; ?>
 
+  <?php if (form_group_visible('tech_support')): ?>
   <div class="group-shell mt-4">
     <h3 class="group-title">Tech Support</h3>
     <div class="row g-3">
@@ -120,4 +131,5 @@
       </div>
     </div>
   </div>
+  <?php endif; ?>
 </section>

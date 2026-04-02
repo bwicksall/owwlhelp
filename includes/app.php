@@ -23,6 +23,19 @@ $listservs = $config['listservs'] ?? ['YSL-L', 'Holdings'];
 $evergreen_account_types = $config['evergreen_account_types'] ?? ['Basic (No Circ)', 'Circ I', 'Circ II'];
 $allowed_email_domains = $config['allowed_email_domains'] ?? ['owwl.org'];
 $otp_ttl_seconds = (int) ($config['otp_ttl_seconds'] ?? 600);
+$form_group_visibility = $config['form_group_visibility'] ?? [
+    'account_management' => true,
+    'admin' => true,
+    'central_library' => false,
+    'cataloging' => true,
+    'evergreen' => true,
+    'tech_support' => true,
+];
+
+function form_group_visible(string $group_key): bool {
+    global $form_group_visibility;
+    return (bool) ($form_group_visibility[$group_key] ?? true);
+}
 
 function h(string $value): string {
     return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');

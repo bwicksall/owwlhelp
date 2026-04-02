@@ -29,4 +29,12 @@ $config = [
         'owwl.org',
     ],
     'otp_ttl_seconds' => 600,
+    'form_group_visibility' => [
+        'account_management' => true,
+        'admin' => true,
+        'central_library' => false,
+        'cataloging' => true,
+        'evergreen' => true,
+        'tech_support' => true,
+    ],
 ];
