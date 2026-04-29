@@ -2,17 +2,4 @@ Ticket Type: Request original cataloging
 Requester Email: {{requester_email}}
 Library: {{requester_library}}
 
-Title and Subtitle: {{oc_title_subtitle}}
-Material Type: {{oc_material_type}}
-Genre or Category: {{oc_genre_category}}
-Physical Description: {{oc_physical_description}}
-Summary: {{oc_summary}}
-Format: {{oc_format}}
-Additional Format Information: {{oc_additional_format_info}}
-Author: {{oc_author}}
-Publisher or Manufacturer: {{oc_publisher_manufacturer}}
-Year Details: {{oc_year_details}}
-Record Need-by Date: {{oc_need_by_date}}
-Additional Material Type Details: {{oc_additional_material_details}}
-Additional Comments: {{oc_additional_comments}}
-ISBN or UPC: {{oc_isbn_upc}}
+{{field_lines}}
