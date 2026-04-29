@@ -105,3 +105,8 @@ label {
   font-size: 1rem;
   letter-spacing: 0.04em;
 }
+
+.required-marker {
+  color: #b42318;
+  font-weight: 700;
+}

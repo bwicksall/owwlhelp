@@ -121,3 +121,45 @@ function bindOriginalCatalogingRequired() {
 }
 
 bindOriginalCatalogingRequired();
+
+function normalizeOptionalLabels() {
+  document.querySelectorAll('label').forEach((label) => {
+    const text = label.textContent || '';
+    const updated = text.replace(/\s*\(optional\)\s*/gi, '').replace(/\s{2,}/g, ' ').trim();
+    if (updated !== text.trim()) {
+      label.textContent = updated;
+    }
+  });
+}
+
+function markRequiredLabels() {
+  document.querySelectorAll('label .required-marker').forEach((marker) => marker.remove());
+
+  document.querySelectorAll('label[for]').forEach((label) => {
+    const targetId = label.getAttribute('for');
+    if (!targetId) {
+      return;
+    }
+    const input = document.getElementById(targetId);
+    if (!input || !input.required) {
+      return;
+    }
+    if (input.type === 'radio' || input.type === 'checkbox') {
+      return;
+    }
+
+    const marker = document.createElement('span');
+    marker.className = 'required-marker';
+    marker.textContent = ' *';
+    label.appendChild(marker);
+  });
+}
+
+normalizeOptionalLabels();
+markRequiredLabels();
+
+document.addEventListener('change', (event) => {
+  if (event.target && event.target.id === 'oc_material_type') {
+    markRequiredLabels();
+  }
+});
