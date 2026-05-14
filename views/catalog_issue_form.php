@@ -25,6 +25,23 @@
             <option value="Other" <?= $cat_problem === 'Other' ? 'selected' : '' ?>>Other</option>
           </select>
         </div>
+        <div class="col-12">
+          <label class="form-label">Location <span class="required-marker">*</span></label>
+          <div class="d-flex gap-3">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="cat_location" id="cat_location_evergreen" value="Evergreen" <?= $cat_location === 'Evergreen' ? 'checked' : '' ?> required>
+              <label class="form-check-label" for="cat_location_evergreen">Evergreen</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="cat_location" id="cat_location_aspen" value="Aspen" <?= $cat_location === 'Aspen' ? 'checked' : '' ?>>
+              <label class="form-check-label" for="cat_location_aspen">Aspen</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="cat_location" id="cat_location_both" value="both" <?= $cat_location === 'both' ? 'checked' : '' ?>>
+              <label class="form-check-label" for="cat_location_both">both</label>
+            </div>
+          </div>
+        </div>
         <div class="col-md-4">
           <label for="cat_material_type" class="form-label">Material Type (optional)</label>
           <select class="form-select" id="cat_material_type" name="cat_material_type">

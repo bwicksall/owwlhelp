@@ -1,6 +1,7 @@
 <?php
 
 $cat_problem = post_value('cat_problem', $cat_problem);
+$cat_location = post_value('cat_location', $cat_location);
 $cat_material_type = post_value('cat_material_type', $cat_material_type);
 $cat_format = post_value('cat_format', $cat_format);
 $cat_description = post_value('cat_description', $cat_description);
@@ -12,11 +13,15 @@ $cat_isbn_upc = post_value('cat_isbn_upc', $cat_isbn_upc);
 $cat_additional_comments = post_value('cat_additional_comments', $cat_additional_comments);
 
 $allowed_problems = ['Title Error', 'Add ISBN or UPC', 'Page and CM', 'Replace Record', 'Merge Record', 'Field Error', 'Other'];
+$allowed_locations = ['Evergreen', 'Aspen', 'both'];
 $allowed_material_types = ['Book', 'CD', 'DVD', 'Other'];
 $allowed_formats = ['Large Print', 'Regular Print', 'Unabridged', 'Abridged', 'Widescreen', 'Full Screen', 'Other'];
 
 if ($cat_problem === '' || !in_array($cat_problem, $allowed_problems, true)) {
     $errors[] = 'Please select a valid problem type.';
+}
+if ($cat_location === '' || !in_array($cat_location, $allowed_locations, true)) {
+    $errors[] = 'Please select a valid location.';
 }
 if ($cat_material_type !== '' && !in_array($cat_material_type, $allowed_material_types, true)) {
     $errors[] = 'Please select a valid material type.';
@@ -36,6 +41,7 @@ if (!$errors) {
             'requester_email' => $requester_email,
             'requester_library' => $requester_library,
             'cat_problem' => $cat_problem,
+            'cat_location' => $cat_location,
             'cat_material_type' => optional_value($cat_material_type),
             'cat_format' => optional_value($cat_format),
             'cat_description' => $cat_description,
@@ -56,6 +62,7 @@ if (!$errors) {
         $success_message = 'Your request has been sent.';
         $requester_library = '';
         $cat_problem = '';
+        $cat_location = '';
         $cat_material_type = '';
         $cat_format = '';
         $cat_description = '';

@@ -133,7 +133,7 @@ function normalizeOptionalLabels() {
 }
 
 function markRequiredLabels() {
-  document.querySelectorAll('label .required-marker').forEach((marker) => marker.remove());
+  document.querySelectorAll('label .auto-required-marker').forEach((marker) => marker.remove());
 
   document.querySelectorAll('label[for]').forEach((label) => {
     const targetId = label.getAttribute('for');
@@ -149,7 +149,7 @@ function markRequiredLabels() {
     }
 
     const marker = document.createElement('span');
-    marker.className = 'required-marker';
+    marker.className = 'required-marker auto-required-marker';
     marker.textContent = ' *';
     label.appendChild(marker);
   });

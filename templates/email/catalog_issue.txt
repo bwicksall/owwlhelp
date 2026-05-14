@@ -3,6 +3,7 @@ Requester Email: {{requester_email}}
 Library: {{requester_library}}
 
 Problem: {{cat_problem}}
+Location: {{cat_location}}
 Material Type: {{cat_material_type}}
 Format: {{cat_format}}
 Description: {{cat_description}}

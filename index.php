@@ -77,6 +77,7 @@ $cba_format = '';
 
 // Catalog issue defaults.
 $cat_problem = '';
+$cat_location = '';
 $cat_material_type = '';
 $cat_format = '';
 $cat_description = '';
