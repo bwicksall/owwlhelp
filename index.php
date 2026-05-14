@@ -84,7 +84,7 @@ $cat_author = '';
 $cat_title = '';
 $cat_publisher = '';
 $cat_year = '';
-$cat_isbn_ups = '';
+$cat_isbn_upc = '';
 $cat_additional_comments = '';
 
 // Original cataloging defaults.

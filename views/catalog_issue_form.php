@@ -69,8 +69,8 @@
           <input type="text" class="form-control" id="cat_year" name="cat_year" value="<?= h($cat_year) ?>">
         </div>
         <div class="col-md-4">
-          <label for="cat_isbn_ups" class="form-label">ISBN or UPS (optional)</label>
-          <input type="text" class="form-control" id="cat_isbn_ups" name="cat_isbn_ups" value="<?= h($cat_isbn_ups) ?>">
+          <label for="cat_isbn_upc" class="form-label">ISBN or UPC</label>
+          <input type="text" class="form-control" id="cat_isbn_upc" name="cat_isbn_upc" value="<?= h($cat_isbn_upc) ?>">
         </div>
         <div class="col-12">
           <label for="cat_additional_comments" class="form-label">Additional Comments (optional)</label>

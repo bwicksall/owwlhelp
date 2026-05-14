@@ -8,7 +8,7 @@ $cat_author = post_value('cat_author', $cat_author);
 $cat_title = post_value('cat_title', $cat_title);
 $cat_publisher = post_value('cat_publisher', $cat_publisher);
 $cat_year = post_value('cat_year', $cat_year);
-$cat_isbn_ups = post_value('cat_isbn_ups', $cat_isbn_ups);
+$cat_isbn_upc = post_value('cat_isbn_upc', $cat_isbn_upc);
 $cat_additional_comments = post_value('cat_additional_comments', $cat_additional_comments);
 
 $allowed_problems = ['Title Error', 'Add ISBN or UPC', 'Page and CM', 'Replace Record', 'Merge Record', 'Field Error', 'Other'];
@@ -43,7 +43,7 @@ if (!$errors) {
             'cat_title' => optional_value($cat_title),
             'cat_publisher' => optional_value($cat_publisher),
             'cat_year' => optional_value($cat_year),
-            'cat_isbn_ups' => optional_value($cat_isbn_ups),
+            'cat_isbn_upc' => optional_value($cat_isbn_upc),
             'cat_additional_comments' => optional_value($cat_additional_comments),
         ]);
     } catch (RuntimeException $e) {
@@ -63,7 +63,7 @@ if (!$errors) {
         $cat_title = '';
         $cat_publisher = '';
         $cat_year = '';
-        $cat_isbn_ups = '';
+        $cat_isbn_upc = '';
         $cat_additional_comments = '';
     } else {
         $errors[] = 'Your request could not be sent. Please try again or contact support.';

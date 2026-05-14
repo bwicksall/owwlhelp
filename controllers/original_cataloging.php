@@ -37,7 +37,7 @@ if ($oc_material_type === 'Book') {
 } elseif ($oc_material_type === 'Audiobook') {
     $oc_fields = [
         'Author' => post_value('oc_audiobook_author'),
-        'Abridged or Unabridged' => post_value('oc_audiobook_abridged_unabridged'),
+        'Abridged, Unabridged, or Not specified' => post_value('oc_audiobook_abridged_unabridged'),
         'Format' => post_value('oc_audiobook_format'),
         'Physical description' => post_value('oc_audiobook_physical_description'),
         'Publication information' => post_value('oc_audiobook_publication_info'),
@@ -48,7 +48,7 @@ if ($oc_material_type === 'Book') {
         'Intended audience' => post_value('oc_audiobook_intended_audience'),
         'Summary' => post_value('oc_audiobook_summary'),
     ];
-    $required_by_type = ['Abridged or Unabridged', 'Format', 'Physical description', 'Publication information', 'Copyright or Phonogram date', 'Intended audience', 'Summary'];
+    $required_by_type = ['Abridged, Unabridged, or Not specified', 'Format', 'Physical description', 'Publication information', 'Copyright or Phonogram date', 'Intended audience', 'Summary'];
 } elseif ($oc_material_type === 'Musical recording') {
     $oc_fields = [
         'Performer(s)' => post_value('oc_music_performers'),
@@ -70,7 +70,7 @@ if ($oc_material_type === 'Book') {
         'Copyright date' => post_value('oc_video_copyright_date'),
         'Physical description' => post_value('oc_video_physical_description'),
         'Full screen or wide screen' => post_value('oc_video_screen'),
-        'Form of work' => post_value('oc_video_form_of_work'),
+        'Genre' => post_value('oc_video_form_of_work'),
         'Rating and reason' => post_value('oc_video_rating_reason'),
         'Director(s)' => post_value('oc_video_directors'),
         'Producer(s)' => post_value('oc_video_producers'),
@@ -79,7 +79,7 @@ if ($oc_material_type === 'Book') {
         'Additional information' => post_value('oc_video_additional_information'),
         'Summary' => post_value('oc_video_summary'),
     ];
-    $required_by_type = ['Format', 'Publication information', 'Physical description', 'Form of work', 'Summary'];
+    $required_by_type = ['Format', 'Publication information', 'Physical description', 'Genre', 'Summary'];
 } elseif ($oc_material_type === 'Video game') {
     $oc_fields = [
         'Gaming platform' => post_value('oc_game_platform'),
@@ -97,11 +97,11 @@ if ($oc_material_type === 'Book') {
         'Who made this' => post_value('oc_realia_who_made'),
         'Manufacturer information' => post_value('oc_realia_manufacturer_information'),
         'Contents' => post_value('oc_realia_contents'),
-        'Size of container/box' => post_value('oc_realia_container_size'),
+        'Size of item, container, box, etc.' => post_value('oc_realia_container_size'),
         'Contents list' => post_value('oc_realia_contents_list'),
         'Associated ISBNs or UPCs' => post_value('oc_realia_associated_isbns_upcs'),
     ];
-    $required_by_type = ['Year manufactured or assembled', 'Who made this', 'Contents', 'Size of container/box'];
+    $required_by_type = ['Year manufactured or assembled', 'Who made this', 'Contents', 'Size of item, container, box, etc.'];
 }
 
 foreach ($required_by_type as $required_label) {

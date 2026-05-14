@@ -10,5 +10,5 @@ Author: {{cat_author}}
 Title: {{cat_title}}
 Publisher: {{cat_publisher}}
 Year: {{cat_year}}
-ISBN or UPS: {{cat_isbn_ups}}
+ISBN or UPC: {{cat_isbn_upc}}
 Additional Comments: {{cat_additional_comments}}
