@@ -163,3 +163,37 @@ document.addEventListener('change', (event) => {
     markRequiredLabels();
   }
 });
+
+function bindIsbnUpcCarriageReturnBlock() {
+  const isIsbnOrUpcField = (el) => {
+    if (!el || !('name' in el) || !('id' in el)) {
+      return false;
+    }
+    const key = `${el.name || ''} ${el.id || ''}`.toLowerCase();
+    return key.includes('isbn') || key.includes('upc');
+  };
+
+  const sanitize = (el) => {
+    if (!isIsbnOrUpcField(el) || typeof el.value !== 'string') {
+      return;
+    }
+    el.value = el.value.replace(/[\r\n]+/g, ' ');
+  };
+
+  document.addEventListener('keydown', (event) => {
+    const target = event.target;
+    if (!isIsbnOrUpcField(target)) {
+      return;
+    }
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      sanitize(target);
+    }
+  });
+
+  document.addEventListener('input', (event) => {
+    sanitize(event.target);
+  });
+}
+
+bindIsbnUpcCarriageReturnBlock();
