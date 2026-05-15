@@ -49,6 +49,7 @@ $del_full_name = '';
 $del_last_day = '';
 $del_forward_email = 'No';
 $del_forward_target = '';
+$del_has_libcal = 'No';
 
 // OverDrive merge defaults.
 $od_patron_last_name = '';

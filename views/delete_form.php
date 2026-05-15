@@ -49,6 +49,25 @@
     </div>
   </div>
 
+  <div class="section-card mb-4">
+    <div class="section-title mb-3">LibCal</div>
+    <div class="row g-3 align-items-start">
+      <div class="col-12">
+        <label class="form-label">Does this user have a LibCal account?</label>
+        <div class="d-flex gap-3">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="del_has_libcal" id="del_libcal_yes" value="Yes" <?= $del_has_libcal === 'Yes' ? 'checked' : '' ?> required>
+            <label class="form-check-label" for="del_libcal_yes">Yes</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="del_has_libcal" id="del_libcal_no" value="No" <?= $del_has_libcal === 'No' ? 'checked' : '' ?>>
+            <label class="form-check-label" for="del_libcal_no">No</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="d-flex justify-content-end">
     <button type="submit" class="btn btn-primary btn-lg">Submit Request</button>
   </div>
