@@ -132,6 +132,47 @@ function normalizeOptionalLabels() {
   });
 }
 
+function sentenceCaseLabels() {
+  const acronyms = ['ISBN', 'UPC', 'ID', 'OPAC', 'CBA', 'AD', 'OTP', 'DVD', 'UHD', 'LP', 'MP3-CD', '4K'];
+  const properNames = ['Active Directory', 'Evergreen'];
+
+  const toSentenceCase = (value) => {
+    const trimmed = value.replace(/\s{2,}/g, ' ').trim();
+    if (trimmed === '') {
+      return trimmed;
+    }
+
+    let result = trimmed.toLowerCase();
+    result = result.charAt(0).toUpperCase() + result.slice(1);
+
+    acronyms.forEach((acronym) => {
+      const escaped = acronym.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      result = result.replace(new RegExp(`\\b${escaped.toLowerCase()}\\b`, 'gi'), acronym);
+    });
+
+    properNames.forEach((name) => {
+      const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      result = result.replace(new RegExp(`\\b${escaped.toLowerCase()}\\b`, 'gi'), name);
+    });
+
+    return result;
+  };
+
+  document.querySelectorAll('label').forEach((label) => {
+    const marker = label.querySelector('.required-marker');
+    if (marker) {
+      marker.remove();
+    }
+
+    const text = label.textContent || '';
+    label.textContent = toSentenceCase(text);
+
+    if (marker) {
+      label.appendChild(marker);
+    }
+  });
+}
+
 function markRequiredLabels() {
   document.querySelectorAll('label .auto-required-marker').forEach((marker) => marker.remove());
 
@@ -156,6 +197,7 @@ function markRequiredLabels() {
 }
 
 normalizeOptionalLabels();
+sentenceCaseLabels();
 markRequiredLabels();
 
 document.addEventListener('change', (event) => {
