@@ -22,7 +22,7 @@
         </div>
         <div class="col-md-6">
           <label for="oc_need_by_date" class="form-label">Record need-by date</label>
-          <input type="date" class="form-control" id="oc_need_by_date" name="oc_need_by_date" value="<?= h(post_value('oc_need_by_date')) ?>" required>
+          <input type="date" class="form-control" id="oc_need_by_date" name="oc_need_by_date" value="<?= h(post_value('oc_need_by_date')) ?>">
         </div>
         <div class="col-md-6">
           <label for="oc_material_type" class="form-label">Material type</label>

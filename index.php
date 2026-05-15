@@ -52,7 +52,7 @@ $del_forward_target = '';
 
 // OverDrive merge defaults.
 $od_patron_last_name = '';
-$od_new_card_number = '';
+$od_active_account_id = '';
 
 // Admin defaults.
 $delivery_question = '';

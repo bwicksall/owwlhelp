@@ -16,8 +16,8 @@
           <input type="text" class="form-control" id="od_patron_last_name" name="od_patron_last_name" value="<?= h($od_patron_last_name) ?>" required>
         </div>
         <div class="col-md-6">
-          <label for="od_new_card_number" class="form-label">New Library Card Number</label>
-          <input type="text" class="form-control" id="od_new_card_number" name="od_new_card_number" value="<?= h($od_new_card_number) ?>" required>
+          <label for="od_active_account_id" class="form-label">Active Account ID</label>
+          <input type="text" class="form-control" id="od_active_account_id" name="od_active_account_id" value="<?= h($od_active_account_id) ?>" required>
         </div>
       </div>
     </div>

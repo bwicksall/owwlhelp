@@ -4,4 +4,4 @@ Library: {{requester_library}}
 Requester Notes: {{requester_notes}}
 
 Patron Last Name: {{od_patron_last_name}}
-New Library Card Number: {{od_new_card_number}}
+Active Account ID: {{od_active_account_id}}

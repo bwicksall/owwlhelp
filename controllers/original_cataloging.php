@@ -9,9 +9,6 @@ $allowed_material_types = ['Book', 'Audiobook', 'Musical recording', 'Video reco
 if ($oc_title === '') {
     $errors[] = 'Please enter the title.';
 }
-if ($oc_need_by_date === '') {
-    $errors[] = 'Please enter the record need-by date.';
-}
 if (!in_array($oc_material_type, $allowed_material_types, true)) {
     $errors[] = 'Please select a valid material type.';
 }
