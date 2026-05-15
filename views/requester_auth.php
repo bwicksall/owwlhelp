@@ -4,7 +4,7 @@
   <div class="row g-3 align-items-start">
     <div class="<?= $requester_verified ? 'col-md-12' : 'col-md-6' ?>">
       <label for="requester_email" class="form-label">Requester Email</label>
-      <input type="email" class="form-control" id="requester_email" name="requester_email" value="<?= h($requester_email) ?>" required>
+      <input type="email" class="form-control" id="requester_email" name="requester_email" value="<?= h($requester_email) ?>" <?= $requester_verified ? 'readonly' : '' ?> required>
       <?php if (!$requester_verified): ?>
         <div class="form-text">Only approved organization domains can authenticate.</div>
       <?php endif; ?>
@@ -19,14 +19,14 @@
         <?php if (!$otp_sent): ?>
           <button type="submit" class="btn btn-primary" name="auth_action" value="send_otp" formnovalidate>Send OTP Code</button>
         <?php else: ?>
-          <button type="submit" class="btn btn-outline-secondary" name="auth_action" value="send_otp" formnovalidate>Resend OTP Code</button>
+          <button type="submit" class="btn btn-outline-secondary" id="send_otp_button" name="auth_action" value="send_otp" formnovalidate>Resend OTP Code</button>
           <div class="w-100"></div>
           <div class="col-md-3">
             <label for="otp_code" class="form-label">OTP Code</label>
             <input type="text" class="form-control" id="otp_code" name="otp_code" inputmode="numeric" maxlength="6" placeholder="Enter 6-digit code">
           </div>
           <div class="w-100"></div>
-          <button type="submit" class="btn btn-primary" name="auth_action" value="verify_otp" formnovalidate>Verify OTP Code</button>
+          <button type="submit" class="btn btn-primary" id="verify_otp_button" name="auth_action" value="verify_otp" formnovalidate>Verify OTP Code</button>
         <?php endif; ?>
       </div>
     <?php endif; ?>

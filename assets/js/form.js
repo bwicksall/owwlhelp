@@ -239,3 +239,21 @@ function bindIsbnUpcCarriageReturnBlock() {
 }
 
 bindIsbnUpcCarriageReturnBlock();
+
+function bindOtpEnterToVerify() {
+  const otpInput = document.getElementById('otp_code');
+  const verifyButton = document.getElementById('verify_otp_button');
+  if (!otpInput || !verifyButton) {
+    return;
+  }
+
+  otpInput.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter') {
+      return;
+    }
+    event.preventDefault();
+    verifyButton.click();
+  });
+}
+
+bindOtpEnterToVerify();
