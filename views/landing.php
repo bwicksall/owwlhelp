@@ -49,6 +49,12 @@
           <span class="selection-desc">Submit other administrative questions to the admin team.</span>
         </a>
       </div>
+      <div class="col-md-6">
+        <a class="selection-card" href="index.php?form=admin_cards">
+          <span class="selection-title">Library card &amp; keytag order</span>
+          <span class="selection-desc">Submit library card and keytag quantity requests.</span>
+        </a>
+      </div>
     </div>
   </div>
   <?php endif; ?>

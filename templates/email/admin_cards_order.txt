@@ -1,0 +1,11 @@
+Ticket Type: Library card & keytag order
+Requester Email: {{requester_email}}
+Library: {{requester_library}}
+
+Library cards: {{ac_library_cards}}
+Keytags: {{ac_keytags}}
+Card / keytag combos: {{ac_card_keytag_combos}}
+Booklet library cards: {{ac_booklet_library_cards}}
+Booklet keytags: {{ac_booklet_keytags}}
+Booklet card / keytag combos: {{ac_booklet_card_keytag_combos}}
+Additional comments: {{ac_additional_comments}}

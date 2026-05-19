@@ -10,7 +10,7 @@ $auth_message = '';
 $auth_message_type = '';
 
 $view = $_GET['form'] ?? 'landing';
-$allowed_views = ['landing', 'new', 'modify', 'delete', 'overdrive', 'delivery', 'admin', 'reference', 'cba', 'catalog_issue', 'original_cataloging', 'evergreen_issue', 'new_copy_location', 'report_request', 'general_support'];
+$allowed_views = ['landing', 'new', 'modify', 'delete', 'overdrive', 'delivery', 'admin', 'admin_cards', 'reference', 'cba', 'catalog_issue', 'original_cataloging', 'evergreen_issue', 'new_copy_location', 'report_request', 'general_support'];
 if (!in_array($view, $allowed_views, true)) {
     $view = 'landing';
 }
@@ -58,6 +58,13 @@ $od_active_account_id = '';
 // Admin defaults.
 $delivery_question = '';
 $admin_question = '';
+$ac_library_cards = '0';
+$ac_keytags = '0';
+$ac_card_keytag_combos = '0';
+$ac_booklet_library_cards = '0';
+$ac_booklet_keytags = '0';
+$ac_booklet_card_keytag_combos = '0';
+$ac_additional_comments = '';
 
 // Reference question defaults.
 $ref_request_type = '';
@@ -129,7 +136,7 @@ $otp_sent = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $auth_action = post_value('auth_action');
     $form_type = post_value('form_type');
-    $view = $form_type === 'new' || $form_type === 'modify' || $form_type === 'delete' || $form_type === 'overdrive' || $form_type === 'delivery' || $form_type === 'admin' || $form_type === 'reference' || $form_type === 'cba' || $form_type === 'catalog_issue' || $form_type === 'original_cataloging' || $form_type === 'evergreen_issue' || $form_type === 'new_copy_location' || $form_type === 'report_request' || $form_type === 'general_support' ? $form_type : 'landing';
+    $view = $form_type === 'new' || $form_type === 'modify' || $form_type === 'delete' || $form_type === 'overdrive' || $form_type === 'delivery' || $form_type === 'admin' || $form_type === 'admin_cards' || $form_type === 'reference' || $form_type === 'cba' || $form_type === 'catalog_issue' || $form_type === 'original_cataloging' || $form_type === 'evergreen_issue' || $form_type === 'new_copy_location' || $form_type === 'report_request' || $form_type === 'general_support' ? $form_type : 'landing';
 
     $requester_email = post_value('requester_email');
     $requester_library = post_value('requester_library');
@@ -211,6 +218,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require __DIR__ . '/controllers/delivery_questions.php';
         } elseif ($view === 'admin' && $requester_verified) {
             require __DIR__ . '/controllers/other_admin_questions.php';
+        } elseif ($view === 'admin_cards' && $requester_verified) {
+            require __DIR__ . '/controllers/admin_cards_order.php';
         } elseif ($view === 'reference' && $requester_verified) {
             require __DIR__ . '/controllers/reference_question.php';
         } elseif ($view === 'cba' && $requester_verified) {
@@ -285,6 +294,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           require __DIR__ . '/views/delivery_form.php';
       } elseif ($view === 'admin') {
           require __DIR__ . '/views/admin_form.php';
+      } elseif ($view === 'admin_cards') {
+          require __DIR__ . '/views/admin_cards_form.php';
       } elseif ($view === 'reference') {
           require __DIR__ . '/views/reference_form.php';
       } elseif ($view === 'cba') {

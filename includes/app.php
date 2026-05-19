@@ -15,6 +15,7 @@ $originalcataloging_email = $config['originalcataloging_email'] ?? $default_emai
 $reports_email = $config['reports_email'] ?? $default_email;
 $delivery_email = $config['delivery_email'] ?? $default_email;
 $admin_email = $config['admin_email'] ?? $default_email;
+$admin_cards = $config['admin_cards'] ?? $default_email;
 $libraries = $config['libraries'] ?? [
     'TEST1' => 'Test Library 1',
     'TEST2' => 'Test Library 2',

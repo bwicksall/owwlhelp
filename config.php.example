@@ -12,6 +12,7 @@ $config = [
     'reports_email' => 'someone@example.com',
     'delivery_email' => 'someone@example.com',
     'admin_email' => 'someone@example.com',
+    'admin_cards' => 'someone@example.com',
     'libraries' => [
         'TEST1' => 'Test Library 1',
         'TEST2' => 'Test Library 2',
