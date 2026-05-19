@@ -88,6 +88,7 @@ $cat_problem = '';
 $cat_location = '';
 $cat_material_type = '';
 $cat_format = '';
+$cat_database_id_tcn = '';
 $cat_description = '';
 $cat_author = '';
 $cat_title = '';

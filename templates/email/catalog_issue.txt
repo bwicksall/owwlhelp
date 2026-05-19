@@ -6,6 +6,7 @@ Problem: {{cat_problem}}
 Location: {{cat_location}}
 Material Type: {{cat_material_type}}
 Format: {{cat_format}}
+Database ID or TCN: {{cat_database_id_tcn}}
 Description: {{cat_description}}
 Author: {{cat_author}}
 Title: {{cat_title}}

@@ -133,7 +133,7 @@ function normalizeOptionalLabels() {
 }
 
 function sentenceCaseLabels() {
-  const acronyms = ['ISBN', 'UPC', 'ID', 'OPAC', 'CBA', 'AD', 'OTP', 'DVD', 'UHD', 'LP', 'MP3-CD', '4K'];
+  const acronyms = ['ISBN', 'UPC', 'TCN', 'ID', 'OPAC', 'CBA', 'AD', 'OTP', 'DVD', 'UHD', 'LP', 'MP3-CD', '4K'];
   const properNames = ['Active Directory', 'Evergreen'];
 
   const toSentenceCase = (value) => {

@@ -4,6 +4,7 @@ $cat_problem = post_value('cat_problem', $cat_problem);
 $cat_location = post_value('cat_location', $cat_location);
 $cat_material_type = post_value('cat_material_type', $cat_material_type);
 $cat_format = post_value('cat_format', $cat_format);
+$cat_database_id_tcn = post_value('cat_database_id_tcn', $cat_database_id_tcn);
 $cat_description = post_value('cat_description', $cat_description);
 $cat_author = post_value('cat_author', $cat_author);
 $cat_title = post_value('cat_title', $cat_title);
@@ -44,6 +45,7 @@ if (!$errors) {
             'cat_location' => $cat_location,
             'cat_material_type' => optional_value($cat_material_type),
             'cat_format' => optional_value($cat_format),
+            'cat_database_id_tcn' => optional_value($cat_database_id_tcn),
             'cat_description' => $cat_description,
             'cat_author' => optional_value($cat_author),
             'cat_title' => optional_value($cat_title),
@@ -65,6 +67,7 @@ if (!$errors) {
         $cat_location = '';
         $cat_material_type = '';
         $cat_format = '';
+        $cat_database_id_tcn = '';
         $cat_description = '';
         $cat_author = '';
         $cat_title = '';

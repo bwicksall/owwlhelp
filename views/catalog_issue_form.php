@@ -65,6 +65,10 @@
             <option value="Other" <?= $cat_format === 'Other' ? 'selected' : '' ?>>Other</option>
           </select>
         </div>
+        <div class="col-md-4">
+          <label for="cat_database_id_tcn" class="form-label">Database ID or TCN</label>
+          <input type="text" class="form-control" id="cat_database_id_tcn" name="cat_database_id_tcn" value="<?= h($cat_database_id_tcn) ?>">
+        </div>
         <div class="col-12">
           <label for="cat_description" class="form-label">Description</label>
           <textarea class="form-control" id="cat_description" name="cat_description" rows="2" required><?= h($cat_description) ?></textarea>
