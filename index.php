@@ -8,11 +8,20 @@ $errors = [];
 $success_message = '';
 $auth_message = '';
 $auth_message_type = '';
+$form_help_content = '';
 
 $view = $_GET['form'] ?? 'landing';
 $allowed_views = ['landing', 'new', 'modify', 'delete', 'overdrive', 'delivery', 'admin', 'admin_cards', 'reference', 'cba', 'catalog_issue', 'original_cataloging', 'evergreen_issue', 'new_copy_location', 'report_request', 'general_support'];
 if (!in_array($view, $allowed_views, true)) {
     $view = 'landing';
+}
+
+if ($view !== 'landing') {
+    $form_help_path = __DIR__ . '/docs/forms/' . $view . '.md';
+    if (is_file($form_help_path) && is_readable($form_help_path)) {
+        $content = file_get_contents($form_help_path);
+        $form_help_content = $content !== false ? $content : '';
+    }
 }
 
 // Shared requester defaults.
@@ -260,7 +269,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           </a>
         </div>
         <?php if ($view !== 'landing'): ?>
-          <a class="btn btn-outline-secondary btn-sm" href="index.php">Back to Form Selection</a>
+          <div class="d-flex gap-2">
+            <button type="button" class="btn btn-outline-info btn-sm" id="help-drawer-toggle">Help</button>
+            <a class="btn btn-outline-secondary btn-sm" href="index.php">Back to Form Selection</a>
+          </div>
         <?php endif; ?>
       </div>
 
@@ -318,6 +330,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }
       ?>
     </main>
+    <?php if ($view !== 'landing'): ?>
+      <aside class="help-drawer" id="help-drawer" aria-hidden="true">
+        <div class="help-drawer-header">
+          <h2 class="h6 mb-0">Form Help</h2>
+          <button type="button" class="btn-close" id="help-drawer-close" aria-label="Close"></button>
+        </div>
+        <div class="help-drawer-body">
+          <pre class="help-markdown mb-0"><?= h($form_help_content !== '' ? $form_help_content : "Help is not yet available for this form.\n") ?></pre>
+        </div>
+      </aside>
+    <?php endif; ?>
 
     <script src="assets/js/form.js"></script>
   </body>

@@ -257,3 +257,27 @@ function bindOtpEnterToVerify() {
 }
 
 bindOtpEnterToVerify();
+
+function bindHelpDrawer() {
+  const openButton = document.getElementById('help-drawer-toggle');
+  const closeButton = document.getElementById('help-drawer-close');
+  const drawer = document.getElementById('help-drawer');
+  if (!openButton || !closeButton || !drawer) {
+    return;
+  }
+
+  const open = () => {
+    document.body.classList.add('help-open');
+    drawer.setAttribute('aria-hidden', 'false');
+  };
+
+  const close = () => {
+    document.body.classList.remove('help-open');
+    drawer.setAttribute('aria-hidden', 'true');
+  };
+
+  openButton.addEventListener('click', open);
+  closeButton.addEventListener('click', close);
+}
+
+bindHelpDrawer();
