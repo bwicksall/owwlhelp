@@ -146,11 +146,21 @@ body.help-open .help-drawer {
 }
 
 .help-markdown {
-  white-space: pre-wrap;
+  white-space: normal;
   word-break: break-word;
   font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
   font-size: 0.92rem;
   color: #28343c;
+}
+
+.table th,
+tr td:first-child {
+  font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+}
+
+.table td,
+.table th {
+  background: #f9fcfd;
 }
 
 @media (min-width: 992px) {

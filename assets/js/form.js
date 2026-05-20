@@ -281,3 +281,20 @@ function bindHelpDrawer() {
 }
 
 bindHelpDrawer();
+
+function renderHelpMarkdown() {
+  const source = document.getElementById('help-markdown-source');
+  const output = document.getElementById('help-markdown-output');
+  if (!source || !output) {
+    return;
+  }
+
+  const markdown = source.textContent || '';
+  if (window.marked && typeof window.marked.parse === 'function') {
+    output.innerHTML = window.marked.parse(markdown);
+  } else {
+    output.textContent = markdown;
+  }
+}
+
+renderHelpMarkdown();

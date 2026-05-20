@@ -337,11 +337,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <button type="button" class="btn-close" id="help-drawer-close" aria-label="Close"></button>
         </div>
         <div class="help-drawer-body">
-          <pre class="help-markdown mb-0"><?= h($form_help_content !== '' ? $form_help_content : "Help is not yet available for this form.\n") ?></pre>
+          <script type="text/plain" id="help-markdown-source"><?= h($form_help_content !== '' ? $form_help_content : "Help is not yet available for this form.\n") ?></script>
+          <div class="help-markdown mb-0" id="help-markdown-output"></div>
         </div>
       </aside>
     <?php endif; ?>
 
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="assets/js/form.js"></script>
   </body>
 </html>
