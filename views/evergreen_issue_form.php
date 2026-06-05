@@ -10,7 +10,7 @@
 
   <?php if ($requester_verified): ?>
     <div class="section-card mb-4">
-      <div class="section-title mb-3">Issue Details</div>
+      <div class="section-title mb-3">Request Details</div>
       <div class="row g-3">
         <div class="col-md-6">
           <label for="eg_problem_type" class="form-label">Problem Type</label>
@@ -33,7 +33,7 @@
           </select>
         </div>
         <div class="col-12">
-          <label for="eg_issue" class="form-label">Issue</label>
+          <label for="eg_issue" class="form-label">Request</label>
           <textarea class="form-control" id="eg_issue" name="eg_issue" rows="4" required><?= h($eg_issue) ?></textarea>
         </div>
       </div>

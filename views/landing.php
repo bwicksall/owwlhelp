@@ -105,8 +105,8 @@
     <div class="row g-3">
       <div class="col-md-6">
         <a class="selection-card" href="index.php?form=evergreen_issue">
-          <span class="selection-title">Report an Evergreen issue</span>
-          <span class="selection-desc">Submit Evergreen issues by problem type with a detailed issue description.</span>
+          <span class="selection-title">Evergreen and Aspen support request</span>
+          <span class="selection-desc">Use this form for Evergreen, Aspen, OWWL app, catalog, circulation policy, patron account, holds, notices, reports, and related ILS requests and questions.</span>
         </a>
       </div>
       <div class="col-md-6">

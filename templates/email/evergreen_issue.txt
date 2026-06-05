@@ -1,4 +1,4 @@
-Ticket Type: Report an Evergreen Issue
+Ticket Type: Evergreen and Aspen support request
 Requester Email: {{requester_email}}
 Library: {{requester_library}}
 
