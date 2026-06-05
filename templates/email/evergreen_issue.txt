@@ -2,5 +2,4 @@ Ticket Type: Evergreen and Aspen support request
 Requester Email: {{requester_email}}
 Library: {{requester_library}}
 
-Problem Type: {{eg_problem_type}}
 Issue: {{eg_issue}}

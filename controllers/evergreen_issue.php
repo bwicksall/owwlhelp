@@ -1,28 +1,7 @@
 <?php
 
-$eg_problem_type = post_value('eg_problem_type', $eg_problem_type);
 $eg_issue = post_value('eg_issue', $eg_issue);
 
-$allowed_problem_types = [
-    'Bills',
-    'Circulation',
-    'Fines',
-    'Holdings Maintenance',
-    'Holds',
-    'Network Errors',
-    'Notifications',
-    'OPAC',
-    'Overdues',
-    'Printing',
-    'Reports',
-    'Staff Client (general)',
-    'Web Client',
-    'Other (Specify in the "Issue" box)',
-];
-
-if ($eg_problem_type === '' || !in_array($eg_problem_type, $allowed_problem_types, true)) {
-    $errors[] = 'Please select a valid problem type.';
-}
 if ($eg_issue === '') {
     $errors[] = 'Please enter the issue details.';
 }
@@ -34,7 +13,6 @@ if (!$errors) {
         $message = render_email_template('evergreen_issue', [
             'requester_email' => $requester_email,
             'requester_library' => $requester_library,
-            'eg_problem_type' => $eg_problem_type,
             'eg_issue' => $eg_issue,
         ]);
     } catch (RuntimeException $e) {
@@ -46,7 +24,6 @@ if (!$errors) {
     if ($mail_sent) {
         $success_message = 'Your request has been sent.';
         $requester_library = '';
-        $eg_problem_type = '';
         $eg_issue = '';
     } else {
         $errors[] = 'Your request could not be sent. Please try again or contact support.';

@@ -123,7 +123,6 @@ $oc_additional_comments = '';
 $oc_isbn_upc = '';
 
 // Evergreen defaults.
-$eg_problem_type = '';
 $eg_issue = '';
 $ecl_location_name = '';
 $ecl_opac_visible = '';
