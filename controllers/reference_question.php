@@ -11,7 +11,7 @@ if ($ref_request_type === '' || !in_array($ref_request_type, $allowed_request_ty
 }
 
 if (!$errors) {
-    $subject = 'OWWL Help - Ask a Reference Question';
+    $subject = ticket_subject($requester_library, 'Ask a Reference Question');
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
     try {
         $message = render_email_template('reference_question', [

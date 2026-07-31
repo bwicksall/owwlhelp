@@ -12,7 +12,7 @@ if ($er_select_report === '' || !in_array($er_select_report, $allowed_reports, t
 }
 
 if (!$errors) {
-    $subject = 'OWWL Help - Request a Report';
+    $subject = ticket_subject($requester_library, 'Request a Report');
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
     try {
         $message = render_email_template('report_request', [

@@ -7,7 +7,7 @@ if ($eg_issue === '') {
 }
 
 if (!$errors) {
-    $subject = 'OWWL Help - Evergreen and Aspen support request';
+    $subject = ticket_subject($requester_library, 'Evergreen and Aspen support request');
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
     try {
         $message = render_email_template('evergreen_issue', [

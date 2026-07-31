@@ -29,7 +29,7 @@ if ($cba_format !== '' && !in_array($cba_format, $allowed_formats, true)) {
 }
 
 if (!$errors) {
-    $subject = 'OWWL Help - Request a CBA Purchase';
+    $subject = ticket_subject($requester_library, 'Request a CBA Purchase');
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
     try {
         $message = render_email_template('cba_purchase', [

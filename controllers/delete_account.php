@@ -26,7 +26,7 @@ if (!valid_yes_no($del_has_libcal)) {
 }
 
 if (!$errors) {
-    $subject = 'OWWL Help - Delete Account Request';
+    $subject = ticket_subject($requester_library, 'Delete Account Request');
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
     try {
         $message = render_email_template('delete_account', [

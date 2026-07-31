@@ -171,3 +171,12 @@ function render_email_template(string $template_name, array $values = []): strin
 
     return strtr($template, $replacements);
 }
+
+function ticket_subject(string $library, string $description): string {
+    $library = trim($library);
+    return ($library !== '' ? $library . ' - ' : '') . $description;
+}
+
+function clean_email_subject(string $subject): string {
+    return trim(preg_replace('/[\r\n]+/', ' ', $subject) ?? '');
+}

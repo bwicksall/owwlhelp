@@ -11,7 +11,7 @@ if ($ts_description === '') {
 }
 
 if (!$errors) {
-    $subject = 'OWWL Help - General Support';
+    $subject = ticket_subject($requester_library, clean_email_subject($ts_subject));
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
     try {
         $message = render_email_template('general_support', [

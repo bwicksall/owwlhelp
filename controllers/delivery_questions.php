@@ -7,7 +7,7 @@ if ($delivery_question === '') {
 }
 
 if (!$errors) {
-    $subject = 'OWWL Help - Delivery Questions';
+    $subject = ticket_subject($requester_library, 'Delivery Questions');
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
     try {
         $message = render_email_template('delivery_questions', [

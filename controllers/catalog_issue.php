@@ -35,7 +35,7 @@ if ($cat_description === '') {
 }
 
 if (!$errors) {
-    $subject = 'OWWL Help - Report a Catalog Issue';
+    $subject = ticket_subject($requester_library, 'Report a Catalog Issue');
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
     try {
         $message = render_email_template('catalog_issue', [

@@ -65,7 +65,7 @@ if (!$errors) {
         $evergreen_account_details .= "\nEvergreen Notes: " . optional_value($mod_evergreen_notes);
     }
 
-    $subject = 'OWWL Help - Modify Existing Account Request';
+    $subject = ticket_subject($requester_library, 'Modify Existing Account Request');
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
     try {
         $primary_message = render_email_template('modify_account', [

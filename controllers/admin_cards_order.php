@@ -35,7 +35,7 @@ foreach ($qty_fields as $label => $value) {
 }
 
 if (!$errors) {
-    $subject = 'OWWL Help - Library card & keytag order';
+    $subject = ticket_subject($requester_library, 'Library card & keytag order');
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
     try {
         $message = render_email_template('admin_cards_order', [

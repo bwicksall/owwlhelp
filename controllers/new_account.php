@@ -41,7 +41,7 @@ if (!$errors) {
         $evergreen_account_details .= "\nItem Cataloging Add-on Needed: {$new_cataloging_addon}";
     }
 
-    $subject = 'OWWL Help - New User Account Request';
+    $subject = ticket_subject($requester_library, 'New User Account Request');
     $headers = "From: {$requester_email}\r\nReply-To: {$requester_email}\r\n";
     try {
         $primary_message = render_email_template('new_account', [
