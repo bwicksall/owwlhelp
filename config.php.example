@@ -29,6 +29,7 @@ $config = [
     'allowed_email_domains' => [
         'owwl.org',
     ],
+    'session_lifetime_seconds' => 3600,
     'otp_ttl_seconds' => 600,
     'form_group_visibility' => [
         'account_management' => true,

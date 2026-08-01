@@ -1,7 +1,19 @@
 <?php
+require __DIR__ . '/config.php';
+
+$session_lifetime_seconds = max(60, (int) ($config['session_lifetime_seconds'] ?? 3600));
+ini_set('session.gc_maxlifetime', (string) $session_lifetime_seconds);
+$cookie_params = session_get_cookie_params();
+session_set_cookie_params([
+    'lifetime' => $session_lifetime_seconds,
+    'path' => $cookie_params['path'],
+    'domain' => $cookie_params['domain'],
+    'secure' => $cookie_params['secure'],
+    'httponly' => $cookie_params['httponly'],
+    'samesite' => $cookie_params['samesite'] ?? 'Lax',
+]);
 session_start();
 
-require __DIR__ . '/config.php';
 require __DIR__ . '/includes/app.php';
 
 $errors = [];
